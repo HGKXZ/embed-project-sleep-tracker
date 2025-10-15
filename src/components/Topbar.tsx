@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { Bell, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Topbar() {
+
+    const router = useRouter();
 
     return (
         <div className="w-full h-[89px] bg-white border-b border-[#E5E7EB] flex flex-row items-center px-8 fixed">
@@ -17,7 +20,7 @@ export default function Topbar() {
                     <p className="font-inter font-medium text-[14px] text-[#15803D]">All Devices Connected</p>
                 </div>
                 <Bell size={20} className="cursor-pointer"/>
-                <div className="w-[40px] h-[40px] rounded-full bg-[#F3F4F6] flex justify-center items-center">
+                <div className="w-[40px] h-[40px] rounded-full bg-[#F3F4F6] flex justify-center items-center" onClick={() => router.push('/sign-in')}>
                     <User size={20} className="m-2 text-[#6B7280] cursor-pointer"/>
                 </div>
             </div>
