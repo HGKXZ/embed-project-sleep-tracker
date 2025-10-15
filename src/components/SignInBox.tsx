@@ -1,11 +1,13 @@
-"use client";
+"use client"
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function SignInBoxComponent() {
+export default function SignInBox() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   return (
     <div className="w-[384px] h-[540px] bg-white rounded-2xl flex flex-col items-center shadow-lg z-10">
@@ -38,7 +40,7 @@ export default function SignInBoxComponent() {
               autoComplete="password"
             />
           </div>
-          <div className="w-[280px] h-[48px] flex justify-center bg-gradient-to-bl from-[#764BA2] via-[#667EEA] to-[#667EEA] rounded-lg mt-6 cursor-pointer">
+          <div className="w-[280px] h-[48px] flex justify-center bg-gradient-to-bl from-[#764BA2] via-[#667EEA] to-[#667EEA] rounded-lg mt-6 cursor-pointer" onClick={() => router.push('/dashboard')}>
             <p className="text-white mt-3">Sign In</p>
           </div>
           <div>
