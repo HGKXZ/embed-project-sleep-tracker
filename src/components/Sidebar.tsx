@@ -10,7 +10,7 @@ export default function Sidebar() {
     const router = useRouter();
 
     return (
-        <div className="w-[256px] h-full bg-white flex flex-col shadow-lg z-10 p-5">
+        <div className="w-[256px] h-full bg-white flex flex-col shadow-lg z-10 p-5 fixed">
             <div className="flex flex-row items-center">
                 <div className="w-[40px] h-[40px] bg-gradient-to-br from-[#A855F7] to-[#C084FC] rounded-xl mr-3 flex justify-center">
                     <img src="/img/moon.png" alt="Moon Icon" className="w-[12px] h-[14px] self-center my-auto"/>
