@@ -1,6 +1,9 @@
 import Sidebar from "@/components/Sidebar"
+import SleepStagesCard from "@/components/SleepStagesCard"
 import Topbar from "@/components/Topbar"
 import { Brain, Clock, Heart, Moon } from "lucide-react"
+import Environment from "../environment/page"
+import EnvironmentCard from "@/components/EnvironmentCard"
 
 export default function Dashboard() {
   return (
@@ -50,6 +53,10 @@ export default function Dashboard() {
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Avg Heart Rate</p>
                 <p className="font-inter font-bold text-[34px]">62 bpm</p>
               </div>
+            </div>
+            <div className="w-full h-[494px] flex flex-row mt-12 gap-7">
+              <SleepStagesCard/>
+              <EnvironmentCard/>
             </div>
           </div>
         </div>
