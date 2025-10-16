@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function EnvironmentCard() {
     return (
-        <div className="w-[600px] h-[400px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-col p-7 pr-15">
+        <div className="w-[600px] h-[450px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-col p-7 pr-15 hover:scale-[1.03] transition-all duration-300">
             <p className="font-inter font-bold text-[23px] text-[#1E2A4A]">Environment</p>
             <div className="w-full h-[50px] flex flex-row mt-5 items-center">
                 <div className="w-[45px] h-[45px] rounded-xl bg-[#FEFCE8] justify-center items-center flex flex-col mr-4">

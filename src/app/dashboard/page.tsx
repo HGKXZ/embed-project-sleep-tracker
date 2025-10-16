@@ -13,7 +13,7 @@ export default function Dashboard() {
           <Topbar/>
           <div className="w-full h-[1441px] bg-[#F3F4F6] mt-[80px] p-12">
             <div className="w-full h-[200px] flex flex-row gap-7">
-              <div className="w-[400px] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col">
+              <div className="w-[400px] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col hover:scale-[1.05] transition-all duration-300">
                 <div className="w-full h-[55px] flex flex-row justify-between items-center mb-6">
                   <div className="w-[55px] h-[55px] bg-[#EFF6FF] rounded-xl flex justify-center items-center">
                     <Clock size={20} className="text-[#2563EB]"/>
@@ -23,7 +23,7 @@ export default function Dashboard() {
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Total Sleep</p>
                 <p className="font-inter font-bold text-[34px]">7h 45m</p>
               </div>
-              <div className="w-[400px] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col">
+              <div className="w-[400px] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col hover:scale-[1.05] transition-all duration-300">
                 <div className="w-full h-[55px] flex flex-row justify-between items-center mb-6">
                   <div className="w-[55px] h-[55px] bg-[#FAF5FF] rounded-xl flex justify-center items-center">
                     <Moon size={20} className="text-[#9333EA]"/>
@@ -33,7 +33,7 @@ export default function Dashboard() {
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Sleep Quality</p>
                 <p className="font-inter font-bold text-[34px]">85%</p>
               </div>
-              <div className="w-[400px] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col">
+              <div className="w-[400px] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col hover:scale-[1.05] transition-all duration-300">
                 <div className="w-full h-[55px] flex flex-row justify-between items-center mb-6">
                   <div className="w-[55px] h-[55px] bg-[#EEF2FF] rounded-xl flex justify-center items-center">
                     <Brain size={20} className="text-[#4F46E5]"/>
@@ -54,11 +54,11 @@ export default function Dashboard() {
                 <p className="font-inter font-bold text-[34px]">62 bpm</p>
               </div> */}
             </div>
-            <div className="w-full h-[400px] flex flex-row mt-12 gap-7">
+            <div className="w-full h-[450px] flex flex-row mt-8 gap-7">
               <SleepQualityTrendCard/>
               <EnvironmentCard/>
             </div>
-            <div className="w-full h-[400px] flex flex-row mt-12">
+            <div className="w-full h-[400px] flex flex-row mt-8">
               <SleepInsightsCard/>
             </div>
           </div>

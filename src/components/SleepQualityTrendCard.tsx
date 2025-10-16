@@ -41,7 +41,7 @@ export default function SleepQualityTrendCard() {
     const isQuality = option === "quality";
 
     return (
-        <div className="w-[800px] h-[400px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-col p-7">
+        <div className="w-[800px] h-[450px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-col p-7 hover:scale-[1.03] transition-all duration-300">
             <div className="w-full flex flex-row justify-end mb-2 px-3 items-center">
                 <p className="font-inter font-bold text-[23px] text-[#1E2A4A]">Sleep Quality Trend</p>
                 <div className="w-[140px] h-[40px] bg-[#F3F4F6] rounded-lg ml-auto flex flex-row justify-center items-center cursor-pointer">
