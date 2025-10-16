@@ -12,30 +12,24 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function SleepQualityTrendCard() {
+interface SleepRecord {
+  date: string;
+  day: string;
+  minutes: number;
+  sleepQuality: number;
+  deepSleep: number;
+}
 
-    const qualityData = [
-        { date: "Oct 9", sleepQuality: 80 },
-        { date: "Oct 10", sleepQuality: 76 },
-        { date: "Oct 11", sleepQuality: 78 },
-        { date: "Oct 12", sleepQuality: 87 },
-        { date: "Oct 13", sleepQuality: 56 },
-        { date: "Oct 14", sleepQuality: 75 },
-        { date: "Oct 15", sleepQuality: 90 },
-    ];
-    const hoursData = [
-        { date: "Oct 9", hours: 495 },
-        { date: "Oct 10", hours: 405 },
-        { date: "Oct 11", hours: 330 },
-        { date: "Oct 12", hours: 500 },
-        { date: "Oct 13", hours: 430 },
-        { date: "Oct 14", hours: 375 },
-        { date: "Oct 15", hours: 475 },
-    ];
+interface SleepQualityTrendCardProps {
+  dailyRecordData: SleepRecord[];
+}
+
+export default function SleepQualityTrendCard({ dailyRecordData }: SleepQualityTrendCardProps) {
+
     const [option, setOption] = useState<"quality" | "duration">("quality");
-    const formatTime = (hours: number) => {
-        const h = Math.floor(hours / 60);
-        const m = hours % 60;
+    const formatTime = (duration: number) => {
+        const h = Math.floor(duration / 60);
+        const m = duration % 60;
         return `${h}h ${m}m`;
     };
     const isQuality = option === "quality";
@@ -55,11 +49,15 @@ export default function SleepQualityTrendCard() {
             </div>
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart
-                data={isQuality ? qualityData : hoursData}
+                data={isQuality ? dailyRecordData.map(record => ({ date: record.date, quality: record.sleepQuality })) : dailyRecordData.map(record => ({ date: record.date, duration: record.minutes }))}
                 margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
                 >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date"/>
+                <XAxis dataKey="date"
+                    tickFormatter={(date: string) => {
+                    const parts = date.split(",");
+                    return parts[0];
+                }}/>
                 <YAxis
                     tickFormatter={(value: number) =>
                     isQuality ? `${value}%` : formatTime(value)
@@ -74,7 +72,7 @@ export default function SleepQualityTrendCard() {
                 <Legend />
                 <Line
                     type="monotone"
-                    dataKey={isQuality ? "sleepQuality" : "hours"}
+                    dataKey={isQuality ? "quality" : "duration"}
                     stroke={isQuality ? "#6366F1" : "#CA8A04"}
                     strokeWidth={2}
                     dot={{ r: 4 }}

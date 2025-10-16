@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function SleepInsightsCard() {
     return (
-        <div className="w-full h-[450px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-col p-7 gap-5 hover:scale-[1.03] transition-all duration-300">
+        <div className="w-full h-[450px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-col p-7 gap-5 hover:scale-[1.02] transition-all duration-300">
             <p className="font-inter font-bold text-[23px] text-[#1E2A4A]">Sleep Insights</p>
             <div className="w-full h-[120px] bg-[#F0FDF4] rounded-xl p-5 flex flex-row gap-4">
                 <div className="w-[35px] h-[35px] bg-[#DCFCE7] rounded-full flex justify-center items-center">

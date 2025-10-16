@@ -6,6 +6,17 @@ import SleepQualityTrendCard from "@/components/SleepQualityTrendCard"
 import SleepInsightsCard from "@/components/SleepInsightsCard"
 
 export default function Dashboard() {
+
+  const dailyRecordData = [
+    { date: "Oct 9, 2025", day: "Tuesday", minutes: 495, sleepQuality: 80, deepSleep: 110 },
+    { date: "Oct 10, 2025", day: "Wednesday", minutes: 405, sleepQuality: 76, deepSleep: 85 },
+    { date: "Oct 11, 2025", day: "Thursday", minutes: 330, sleepQuality: 78, deepSleep: 70 },
+    { date: "Oct 12, 2025", day: "Friday", minutes: 500, sleepQuality: 87, deepSleep: 130 },
+    { date: "Oct 13, 2025", day: "Saturday", minutes: 430, sleepQuality: 56, deepSleep: 80 },
+    { date: "Oct 14, 2025", day: "Sunday", minutes: 375, sleepQuality: 75, deepSleep: 95 },
+    { date: "Oct 15, 2025", day: "Monday", minutes: 475, sleepQuality: 90, deepSleep: 120 },
+  ];
+
   return (
     <div className="w-[1521px] h-[1521px] flex flex-row">
         <Sidebar/>
@@ -55,7 +66,7 @@ export default function Dashboard() {
               </div> */}
             </div>
             <div className="w-full h-[450px] flex flex-row mt-8 gap-7">
-              <SleepQualityTrendCard/>
+              <SleepQualityTrendCard dailyRecordData={dailyRecordData}/>
               <EnvironmentCard/>
             </div>
             <div className="w-full h-[400px] flex flex-row mt-8">
