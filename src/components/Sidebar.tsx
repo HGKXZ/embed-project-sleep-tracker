@@ -15,7 +15,7 @@ export default function Sidebar() {
                 <div className="w-[40px] h-[40px] bg-gradient-to-br from-[#A855F7] to-[#C084FC] rounded-xl mr-3 flex justify-center">
                     <img src="/img/moon.png" alt="Moon Icon" className="w-[12px] h-[14px] self-center my-auto"/>
                 </div>
-                <p className="font-inter font-bold text-[20px]">SleepSync</p>
+                <p className="font-inter font-bold text-[20px]">SleepWise</p>
             </div>
             <div className="mt-8 flex flex-col gap-2">
                 <div className={`h-[48px] flex flex-row items-center p-5 rounded-lg gap-3 cursor-pointer ${

@@ -7,7 +7,7 @@ export default function Alarms() {
       <Sidebar/>
       <div className="flex flex-col w-[1265px] h-[1521px] ml-[256px]">
         <Topbar/>
-        <div className="w-full h-[1441px] bg-[#F3F4F6] mt-[80px]">
+        <div className="w-full h-[1441px] bg-[#F3F4F6] mt-[80px] p-12">
         </div>
       </div>
     </div>
