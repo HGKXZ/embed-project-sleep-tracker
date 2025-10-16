@@ -31,12 +31,6 @@ export default function Sidebar() {
                     <p className={`font-inter font-medium text-[16px] ${pathname === "/sleep-history" ? "text-[#A855F7]" : "text-[#4B5563]"}`}>Sleep History</p>
                 </div>
                 <div className={`h-[48px] flex flex-row items-center p-5 rounded-lg gap-3 cursor-pointer ${
-                    pathname === "/alarms" ? "bg-[#F3E8FF]" : "bg-white"
-                }`} onClick={() => router.push('/alarms')}>
-                    <BellRing size={20} color={`${pathname === "/alarms" ? "#A855F7" : "#4B5563"}`}/>
-                    <p className={`font-inter font-medium text-[16px] ${pathname === "/alarms" ? "text-[#A855F7]" : "text-[#4B5563]"}`}>Alarms</p>
-                </div>
-                <div className={`h-[48px] flex flex-row items-center p-5 rounded-lg gap-3 cursor-pointer ${
                     pathname === "/environment" ? "bg-[#F3E8FF]" : "bg-white"
                 }`} onClick={() => router.push('/environment')}>
                     <Thermometer size={20} color={`${pathname === "/environment" ? "#A855F7" : "#4B5563"}`}/>
