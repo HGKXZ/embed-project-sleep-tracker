@@ -61,31 +61,31 @@ export default function SleepHistory() {
   }
 
   return (
-    <div className="w-[1521px] h-[1521px] flex flex-row">
+    <div className="w-[1425px] h-[1521px] flex flex-row">
       <Sidebar/>
-      <div className="flex flex-col w-[1265px] h-[1521px] ml-[256px]">
+      <div className="flex flex-col w-[80%] h-[1521px] ml-[20%]">
         <Topbar/>
-        <div className="w-full h-[1441px] bg-[#F3F4F6] mt-[80px] p-12 flex flex-row gap-10">
-          <div className="flex flex-col w-[800px] h-full">
+        <div className="w-full h-[1441px] bg-[#F3F4F6] mt-[80px] p-7 flex flex-row gap-10">
+          <div className="flex flex-col w-[75%] h-full">
             <SleepQualityTrendCard dailyRecordData={dailyRecordData}/>
-             <div className="flex flex-col w-[800px] mt-7">
+             <div className="flex flex-col w-full mt-7">
               <p className="font-inter font-semibold text-[20px] text-[#1E293B]">Daily Sleep Records</p>
               {dailyRecordData.reverse().map((data: any) => (
-                <div key={data.date} className="w-[800px] h-[100px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-row p-7 hover:scale-[1.05] transition-all duration-300 mt-5 items-center">
+                <div key={data.date} className="w-full h-[100px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-row p-7 hover:scale-[1.05] transition-all duration-300 mt-5 items-center">
                   <div className="w-[18px] h-[18px] rounded-full" style={{ backgroundColor: getQualityBackgroundColor(data.sleepQuality) }}></div>
-                  <div className="flex flex-col w-[300px] ml-6">
+                  <div className="flex flex-col w-[50%] ml-6">
                     <p className="font-inter font-semibold text-[18px] text-[#1E293B]">{data.date}</p>
                     <p className="font-inter font-regular text-[16px] text-[#4B5563]">{data.day}</p>
                   </div>
-                  <div className="flex flex-col w-[100px] ml-6">
+                  <div className="flex flex-col w-[15%] ml-6">
                     <p className="font-inter font-regular text-[16px] text-[#4B5563]">Total Sleep</p>
                     <p className="font-inter font-semibold text-[18px] text-[#1E293B]">{formatTime(data.minutes)}</p>
                   </div>
-                  <div className="flex flex-col w-[100px] ml-6">
+                  <div className="flex flex-col w-[15%] ml-6">
                     <p className="font-inter font-regular text-[16px] text-[#4B5563]">Quality</p>
                     <p className={`font-inter font-semibold text-[18px] text-[${getQualityTextColor(data.sleepQuality)}]`}>{data.sleepQuality}%</p>
                   </div>
-                  <div className="flex flex-col w-[100px] ml-6">
+                  <div className="flex flex-col w-[15%] ml-6">
                     <p className="font-inter font-regular text-[16px] text-[#4B5563]">Deep Sleep</p>
                     <p className="font-inter font-semibold text-[18px] text-[#1E293B]">{formatTime(data.deepSleep)}</p>
                   </div>
@@ -93,7 +93,7 @@ export default function SleepHistory() {
               ))}
             </div>
           </div>
-          <div className="flex flex-col w-[400px] h-full gap-7">
+          <div className="flex flex-col w-[25%] h-full gap-7">
             <div className="w-full h-[300px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-col p-7 hover:scale-[1.05] transition-all duration-300">
               <p className="font-inter font-semibold text-[20px] text-[#1E293B]">Weekly Summary</p>
               <div className="flex flex-row mt-4">

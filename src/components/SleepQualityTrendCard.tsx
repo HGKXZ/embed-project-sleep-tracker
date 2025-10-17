@@ -35,14 +35,14 @@ export default function SleepQualityTrendCard({ dailyRecordData }: SleepQualityT
     const isQuality = option === "quality";
 
     return (
-        <div className="w-[800px] h-[450px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-col p-7 hover:scale-[1.03] transition-all duration-300">
+        <div className="w-full h-[450px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-col p-7 hover:scale-[1.03] transition-all duration-300">
             <div className="w-full flex flex-row justify-end mb-2 px-3 items-center">
                 <p className="font-inter font-bold text-[23px] text-[#1E2A4A]">Sleep Quality Trend</p>
-                <div className="w-[140px] h-[40px] bg-[#F3F4F6] rounded-lg ml-auto flex flex-row justify-center items-center cursor-pointer">
-                    <div className={`flex flex-col items-center rounded-lg px-3 py-1 ${isQuality ? 'text-white bg-[#C084FC]' : 'text-[#6B7280]'}`} onClick={() => setOption('quality')}>
+                <div className="w-[20%] h-[40px] bg-[#F3F4F6] rounded-lg ml-auto flex flex-row justify-center items-center cursor-pointer gap-2">
+                    <div className={`flex flex-col items-center rounded-lg px-2 py-1 ${isQuality ? 'text-white bg-[#C084FC]' : 'text-[#6B7280]'}`} onClick={() => setOption('quality')}>
                         <p className="font-inter font-regular text-[14px]">Quality</p>
                     </div>
-                    <div className={`flex flex-col items-center rounded-lg px-3 py-1 ${!isQuality ? 'text-white bg-[#C084FC]' : 'text-[#6B7280]'}`} onClick={() => setOption('duration')}>
+                    <div className={`flex flex-col items-center rounded-lg px-2 py-1 ${!isQuality ? 'text-white bg-[#C084FC]' : 'text-[#6B7280]'}`} onClick={() => setOption('duration')}>
                         <p className="font-inter font-regular text-[14px]">Hours</p>
                     </div>
                 </div>
