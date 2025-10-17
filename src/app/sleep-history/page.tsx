@@ -14,6 +14,7 @@ export default function SleepHistory() {
     { date: "Oct 14, 2025", day: "Sunday", minutes: 375, sleepQuality: 75, deepSleep: 95 },
     { date: "Oct 15, 2025", day: "Monday", minutes: 475, sleepQuality: 90, deepSleep: 120 },
   ];
+  const dailyRecordDataReversed = [...dailyRecordData].reverse();
 
   const getQualityBackgroundColor = (quality: number) => {
     if (quality >= 80) return "#4ADE80" 
@@ -70,7 +71,7 @@ export default function SleepHistory() {
             <SleepQualityTrendCard dailyRecordData={dailyRecordData}/>
              <div className="flex flex-col w-full mt-7">
               <p className="font-inter font-semibold text-[20px] text-[#1E293B]">Daily Sleep Records</p>
-              {dailyRecordData.reverse().map((data: any) => (
+              {dailyRecordDataReversed.map((data: any) => (
                 <div key={data.date} className="w-full h-[100px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-row p-7 hover:scale-[1.05] transition-all duration-300 mt-5 items-center">
                   <div className="w-[18px] h-[18px] rounded-full" style={{ backgroundColor: getQualityBackgroundColor(data.sleepQuality) }}></div>
                   <div className="flex flex-col w-[50%] ml-6">
