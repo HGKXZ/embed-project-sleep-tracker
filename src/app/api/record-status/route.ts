@@ -12,7 +12,7 @@ import { Timestamp } from 'firebase/firestore';
 
 type StatusType = "START" | "END";
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   try {
 
     const url = new URL(req.url);

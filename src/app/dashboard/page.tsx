@@ -16,19 +16,27 @@ export default function Dashboard() {
   const [dailyRecordData, setDailyRecordData] = useState<SessionRecords>();
   const [hourlyRecordData, setHourlyRecordData] = useState<HourlyRecords[]>([]);
   const [isOn, setIsOn] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function handleToggle() {
     let target = 'START'
     if(isOn) target = 'END'
     axios
-      .post(`http://localhost:3000/api/record-status?type=${target}`)
+      .get(`http://localhost:3000/api/record-status?type=${target}`)
+      .then(response => {
+        setLoading(true)  
+        loadData()
+        setLoading(false)
+      }
+      )
       .catch(err => {
         console.error(err)
       })
-    loadData()
+    
   }
 
   function loadData(){
+      setLoading(true)
       axios
       .get("http://localhost:3000/api/daily-report") //urgent: ?date=2025-11-29
       .then(response => {  
@@ -48,6 +56,7 @@ export default function Dashboard() {
       .catch(err => {
         console.error(err)
       })
+      setLoading(false)
   }
 
   useEffect(() => {

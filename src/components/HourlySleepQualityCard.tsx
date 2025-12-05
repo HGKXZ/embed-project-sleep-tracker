@@ -56,7 +56,7 @@ export default function HourlySleepQualityCard({
     <div className="w-full h-[450px] bg-white rounded-2xl shadow-lg p-7 border-b border-[#E5E7EB] flex flex-col">
       <div className="w-full flex flex-row justify-between mb-2 px-3 items-center">
         <p className="font-inter font-bold text-[23px] text-[#1E2A4A]">
-          Hourly Sleep Score
+          Enviroment Sleep Score
         </p>
 
         <p className="font-inter font-regular text-[18px] text-[#4B5563]">
