@@ -1,7 +1,6 @@
 "use client"
 
-import { useState } from "react";
-import { ChartLine, Bed, BellRing, Thermometer } from "lucide-react";
+import { ChartLine, Bed, Thermometer, TreePine } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function Sidebar() {
@@ -35,6 +34,12 @@ export default function Sidebar() {
                 }`} onClick={() => router.push('/environment')}>
                     <Thermometer size={20} color={`${pathname === "/environment" ? "#A855F7" : "#4B5563"}`}/>
                     <p className={`font-inter font-medium text-[16px] ${pathname === "/environment" ? "text-[#A855F7]" : "text-[#4B5563]"}`}>Environment</p>
+                </div>
+                <div className={`h-[48px] flex flex-row items-center p-5 rounded-lg gap-3 cursor-pointer ${
+                    pathname === "/forest" ? "bg-[#F3E8FF]" : "bg-white"
+                }`} onClick={() => router.push('/forest')}>
+                    <TreePine size={20} color={`${pathname === "/forest" ? "#A855F7" : "#4B5563"}`}/>
+                    <p className={`font-inter font-medium text-[16px] ${pathname === "/forest" ? "text-[#A855F7]" : "text-[#4B5563]"}`}>Forest</p>
                 </div>
             </div>
         </div>
