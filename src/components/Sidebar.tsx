@@ -1,47 +1,92 @@
-"use client"
+"use client";
 
-import { ChartLine, Bed, Thermometer, TreePine } from "lucide-react";
+import { useState } from "react";
+import { ChartLine, Bed, Thermometer, TreePine, PanelLeftClose, PanelLeft } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function Sidebar() {
-
     const pathname = usePathname();
     const router = useRouter();
+    const [collapsed, setCollapsed] = useState(false);
 
     return (
-        <div className="w-[20%] h-full bg-white flex flex-col shadow-lg z-10 p-5 fixed">
-            <div className="flex flex-row items-center">
-                <div className="w-[40px] h-[40px] bg-gradient-to-br from-[#A855F7] to-[#C084FC] rounded-xl mr-3 flex justify-center">
-                    <img src="/img/moon.png" alt="Moon Icon" className="w-[12px] h-[14px] self-center my-auto"/>
-                </div>
-                <p className="font-inter font-bold text-[20px]">SleepWise</p>
+        <aside  className={`h-full bg-white flex flex-col shadow-lg p-5 transition-all duration-300
+            ${collapsed ? "w-[5%]" : "w-[20%]"}`}>
+
+            {/* Header */}
+            <div className="flex flex-row items-center justify-between">
+                {!collapsed && (
+                    <div className="flex flex-row items-center">
+                        <div className="w-[40px] h-[40px] bg-gradient-to-br from-[#A855F7] to-[#C084FC] rounded-xl mr-3 flex justify-center">
+                            <img src="/img/moon.png" alt="Moon Icon" className="w-[12px] h-[14px] self-center"/>
+                        </div>
+                        <p className="font-inter font-bold text-[20px]">SleepWise</p>
+                    </div>
+                )}
+
+                <button
+                    className="p-2 rounded-lg hover:bg-gray-100"
+                    onClick={() => setCollapsed(!collapsed)}
+                >
+                    {collapsed ? <PanelLeft size={20}/> : <PanelLeftClose size={20}/>}
+                </button>
             </div>
+
+            {/* Menu */}
             <div className="mt-8 flex flex-col gap-2">
-                <div className={`h-[48px] flex flex-row items-center p-5 rounded-lg gap-3 cursor-pointer ${
-                    pathname === "/dashboard" ? "bg-[#F3E8FF]" : "bg-white"
-                }`} onClick={() => router.push('/dashboard')}>
-                    <ChartLine size={20} color={`${pathname === "/dashboard" ? "#A855F7" : "#4B5563"}`}/>
-                    <p className={`font-inter font-medium text-[16px] ${pathname === "/dashboard" ? "text-[#A855F7]" : "text-[#4B5563]"}`}>Dashboard</p>
-                </div>
-                <div className={`h-[48px] flex flex-row items-center p-5 rounded-lg gap-3 cursor-pointer ${
-                    pathname === "/sleep-history" ? "bg-[#F3E8FF]" : "bg-white"
-                }`} onClick={() => router.push('/sleep-history')}>
-                    <Bed size={20} color={`${pathname === "/sleep-history" ? "#A855F7" : "#4B5563"}`}/>
-                    <p className={`font-inter font-medium text-[16px] ${pathname === "/sleep-history" ? "text-[#A855F7]" : "text-[#4B5563]"}`}>Sleep History</p>
-                </div>
-                <div className={`h-[48px] flex flex-row items-center p-5 rounded-lg gap-3 cursor-pointer ${
-                    pathname === "/environment" ? "bg-[#F3E8FF]" : "bg-white"
-                }`} onClick={() => router.push('/environment')}>
-                    <Thermometer size={20} color={`${pathname === "/environment" ? "#A855F7" : "#4B5563"}`}/>
-                    <p className={`font-inter font-medium text-[16px] ${pathname === "/environment" ? "text-[#A855F7]" : "text-[#4B5563]"}`}>Environment</p>
-                </div>
-                <div className={`h-[48px] flex flex-row items-center p-5 rounded-lg gap-3 cursor-pointer ${
-                    pathname === "/forest" ? "bg-[#F3E8FF]" : "bg-white"
-                }`} onClick={() => router.push('/forest')}>
-                    <TreePine size={20} color={`${pathname === "/forest" ? "#A855F7" : "#4B5563"}`}/>
-                    <p className={`font-inter font-medium text-[16px] ${pathname === "/forest" ? "text-[#A855F7]" : "text-[#4B5563]"}`}>Forest</p>
-                </div>
+                <SidebarItem
+                    active={pathname === "/dashboard"}
+                    label="Dashboard"
+                    icon={<ChartLine size={20}/>}
+                    collapsed={collapsed}
+                    onClick={() => router.push("/dashboard")}
+                />
+
+                <SidebarItem
+                    active={pathname === "/sleep-history"}
+                    label="Sleep History"
+                    icon={<Bed size={20}/>}
+                    collapsed={collapsed}
+                    onClick={() => router.push("/sleep-history")}
+                />
+
+                <SidebarItem
+                    active={pathname === "/environment"}
+                    label="Environment"
+                    icon={<Thermometer size={20}/>}
+                    collapsed={collapsed}
+                    onClick={() => router.push("/environment")}
+                />
+
+                <SidebarItem
+                    active={pathname === "/forest"}
+                    label="Forest"
+                    icon={<TreePine size={20}/>}
+                    collapsed={collapsed}
+                    onClick={() => router.push("/forest")}
+                />
             </div>
+        </aside >
+    );
+}
+
+function SidebarItem({ active, label, icon, collapsed, onClick }: any) {
+    return (
+        <div
+            onClick={onClick}
+            className={`h-[48px] flex flex-row items-center p-5 rounded-lg gap-3 cursor-pointer transition-all duration-200
+                ${active ? "bg-[#F3E8FF]" : "bg-white"}`}
+        >
+            <div className={`${active ? "text-[#A855F7]" : "text-[#4B5563]"}`}>
+                {icon}
+            </div>
+
+            {!collapsed && (
+                <p className={`font-inter font-medium text-[16px] 
+                    ${active ? "text-[#A855F7]" : "text-[#4B5563]"}`}>
+                    {label}
+                </p>
+            )}
         </div>
-    )
-};
+    );
+}

@@ -15,7 +15,7 @@ interface EnvironmentCardProps {
 export default function EnvironmentCard({ environment }: EnvironmentCardProps) {
     return (
         <div className="w-full h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-col p-7 hover:scale-[1.03] transition-all duration-300">
-            <p className="font-inter font-bold text-[23px] text-[#1E2A4A]">Environment</p>
+            <p className="font-inter font-bold text-[23px] text-[#1E2A4A]">Average Environment</p>
             <div className="w-full h-[50px] flex flex-row mt-5 items-center">
                 <div className="w-[45px] h-[45px] rounded-xl bg-[#FEFCE8] justify-center items-center flex flex-col mr-4">
                     <Sun size={20} className="text-[#CA8A04]"/>

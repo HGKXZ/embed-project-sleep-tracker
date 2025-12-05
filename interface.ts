@@ -1,7 +1,5 @@
-interface SessionRecords {
-  session_id: string;
-  timestamp: string;
-  day: string;
+export interface SessionRecords {
+  date: string;
   averageHumidity: number;
   averageLightExposure: number;
   averageSoundLevel: number;
@@ -10,7 +8,7 @@ interface SessionRecords {
   totalSleepDuration: number;
 }
 
-interface HourlyRecords {
+export interface HourlyRecords {
   timestamp: string;
   session_id: string;
   sleep_score: number;

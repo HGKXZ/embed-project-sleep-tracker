@@ -5,31 +5,47 @@ import Topbar from "@/components/Topbar"
 import { Brain, Clock, Heart, Moon, ToggleLeft, ToggleRight } from "lucide-react"
 import EnvironmentCard from "@/components/EnvironmentCard"
 import SleepInsightsCard from "@/components/SleepInsightsCard"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import HourlySleepQualityCard from "@/components/HourlySleepQualityCard"
-import { dailyRecordData, hourlyRecordData } from "../../../mock";
-
+import axios from "axios"
+import { SessionRecords, HourlyRecords } from "../../../interface"
 export default function Dashboard() {
+
+  // Back end connect
+  const [dailyRecordData, setDailyRecordData] = useState<SessionRecords>();
+  const [hourlyRecordData, setHourlyRecordData] = useState<HourlyRecords[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/daily-report?date=2025-11-14")
+      .then(response => {  
+        setDailyRecordData(response.data.response.data.sleepReport)
+        setHourlyRecordData(response.data.response.data.hourlyData)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }, []);
 
   const [isOn, setIsOn] = useState(false);
   const formatTime = (duration: number) => {
-        const h = Math.floor(duration / 60);
-        const m = duration % 60;
-        return `${h}h ${m}m`;
-    };
-  const lastNight = dailyRecordData[dailyRecordData.length -1];
+    const h = Math.floor(duration / 3600);
+    const m = Math.floor((duration % 3600) / 60);
+    const s = duration % 60;
+    return `${h}h ${m}m ${s}s`;
+  };
+  const lastNight = dailyRecordData
   const environment = {
-    humidity: dailyRecordData[dailyRecordData.length -1].averageHumidity,
-    lightExposure: dailyRecordData[dailyRecordData.length -1].averageLightExposure,
-    soundLevel: dailyRecordData[dailyRecordData.length -1].averageSoundLevel,
-    temperature: dailyRecordData[dailyRecordData.length -1].averageTemperature,
+    humidity: dailyRecordData?.averageHumidity ? dailyRecordData?.averageHumidity : 0,
+    lightExposure: dailyRecordData?.averageLightExposure ? dailyRecordData?.averageLightExposure : 0,
+    soundLevel: dailyRecordData?.averageSoundLevel ? dailyRecordData?.averageSoundLevel : 0,
+    temperature: dailyRecordData?.averageTemperature ? dailyRecordData?.averageTemperature : 0,
   }
 
   return (
-    <div className="w-[1425px] h-[1521px] flex flex-row">
-        <Sidebar/>
-        <div className="flex flex-col w-[80%] h-[1521px] ml-[20%]">
+    <div className="w-full h-[1521px] flex flex-row">
+        <div className="flex flex-col w-full h-[1521px]">
           <Topbar/>
           <div className="w-full h-[1441px] bg-[#F3F4F6] mt-[80px] p-7">
             <div className="w-full h-[200px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col">
@@ -63,22 +79,22 @@ export default function Dashboard() {
                   <div className="w-[55px] h-[55px] bg-[#EFF6FF] rounded-xl flex justify-center items-center">
                     <Clock size={20} className="text-[#2563EB]"/>
                   </div>
-                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">+15 min</p>
+                  {/* <p className="font-inter font-medium text-[16px] text-[#16A34A]">+15 min</p> */}
                 </div>
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Total Sleep</p>
-                <p className="font-inter font-bold text-[34px]">{formatTime(lastNight.totalSleepDuration)}</p>
+                <p className="font-inter font-bold text-[34px]">{formatTime(dailyRecordData?.totalSleepDuration ? dailyRecordData.totalSleepDuration : 0)}</p>
               </div>
               <div className="w-[33%] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col hover:scale-[1.05] transition-all duration-300">
                 <div className="w-full h-[55px] flex flex-row justify-between items-center mb-6">
                   <div className="w-[55px] h-[55px] bg-[#FAF5FF] rounded-xl flex justify-center items-center">
                     <Moon size={20} className="text-[#9333EA]"/>
                   </div>
-                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">Good</p>
+                  {/* <p className="font-inter font-medium text-[16px] text-[#16A34A]">Good</p> */}
                 </div>
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Average Sleep Quality</p>
-                <p className="font-inter font-bold text-[34px]">{lastNight.sleepQualityScore}%</p>
+                <p className="font-inter font-bold text-[34px]">{dailyRecordData?.sleepQualityScore ? dailyRecordData.sleepQualityScore : 0}%</p>
               </div>
-              <div className="w-[33%] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col hover:scale-[1.05] transition-all duration-300">
+              {/* <div className="w-[33%] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col hover:scale-[1.05] transition-all duration-300">
                 <div className="w-full h-[55px] flex flex-row justify-between items-center mb-6">
                   <div className="w-[55px] h-[55px] bg-[#EEF2FF] rounded-xl flex justify-center items-center">
                     <Brain size={20} className="text-[#4F46E5]"/>
@@ -87,7 +103,7 @@ export default function Dashboard() {
                 </div>
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Deep Sleep</p>
                 <p className="font-inter font-bold text-[34px]">{formatTime(120)}</p>
-              </div>
+              </div> */}
               {/* <div className="w-[300px] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col">
                 <div className="w-full h-[55px] flex flex-row justify-between items-center mb-6">
                   <div className="w-[55px] h-[55px] bg-[#F0FDF4] rounded-xl flex justify-center items-center">
@@ -101,7 +117,7 @@ export default function Dashboard() {
             </div>
             <div className="w-full h-[450px] flex flex-row mt-5 gap-5">
               <div className="w-[70%]">
-                <HourlySleepQualityCard timestamp={lastNight.timestamp} hourlyRecordData={hourlyRecordData}/>
+                <HourlySleepQualityCard timestamp={dailyRecordData?.date} hourlyRecordData={hourlyRecordData}/>
               </div>
               <div className="w-[30%]">
                 <EnvironmentCard environment={environment}/>

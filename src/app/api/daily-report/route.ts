@@ -43,10 +43,19 @@ export async function GET(req: Request) {
 
     const sleepReport = sessionSnap.docs[0]?.data() ?? null;
 
+    const hourlyQuery = query(
+      collection(db, 'hourly_records'),
+      where('timestamp', '>=', start),
+      where('timestamp', '<=', new Date(end))
+    );
+    const hourlySnap = await getDocs(hourlyQuery);
+    const hourlyData = hourlySnap.docs.map(doc => doc.data());
+    console.log(hourlyData);
+
     return NextResponse.json({
       success: true,
       response: {
-        data: { sleepReport },
+        data: { sleepReport, hourlyData },
         pagination: {}
       },
       errors: []
