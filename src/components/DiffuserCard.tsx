@@ -1,0 +1,109 @@
+"use client";
+
+import { Play, Square } from "lucide-react";
+import { useState, useEffect } from "react";
+
+export default function TrackingCard() {
+  const [isRunning, setIsRunning] = useState(false);
+  const [timer, setTimer] = useState(0);
+
+  const startAroma = () => {
+    setIsRunning(true);
+    setTimer(10); // run for 10 seconds
+  };
+
+  const stopAroma = () => {
+    setIsRunning(false);
+    setTimer(0);
+  };
+
+  // Auto countdown + stop
+  useEffect(() => {
+    if (!isRunning || timer === 0) return;
+
+    const interval = setInterval(() => {
+      setTimer((prev) => {
+        if (prev === 1) {
+          setIsRunning(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isRunning, timer]);
+
+  return (
+    <div className="w-[90%] h-[500px] bg-white rounded-2xl shadow-lg p-7 border-b border-[#E5E7EB] flex flex-col items-center mt-7">
+
+      <div className="relative w-full h-[320px] flex justify-center">
+        <div className="w-[50px] h-[50px] rounded-full bg-[#A4E8D4] absolute right-75 shadow-xl flex justify-center items-center">
+          <img src="/img/star.png" className="w-[20px]" />
+        </div>
+
+        <div
+          className={`w-[300px] h-[300px] rounded-full bg-gradient-to-br 
+            ${isRunning ? "from-[#A4E8D4] to-[#7CC9E8]" : "from-[#B8A4E8] to-[#A4E8D4]"} 
+            flex justify-center items-center shadow-xl transition-all duration-500
+            ${isRunning ? "scale-110" : "scale-100"}
+          `}
+        >
+          <div
+            className={`w-[91%] h-[270px] rounded-full bg-white flex flex-col justify-center items-center
+              transition-opacity duration-500 ${isRunning ? "opacity-70" : "opacity-100"}
+            `}
+          >
+            <img src="/img/drop.png" className="w-[40px]" />
+
+            {!isRunning ? (
+              <p className="font-inter font-bold text-[22px] text-[#1F2937] mt-4">Aroma Diffuser Ready</p>
+            ) : (
+              <p className="font-inter font-bold text-[22px] text-[#1F2937] mt-4">
+                Running... {timer}s
+              </p>
+            )}
+
+            {!isRunning ? (
+              <p className="font-inter font-medium text-[14px] text-[#6B7280] mt-2">
+                Tap to start aroma diffuser
+              </p>
+            ) : (
+              <p className="font-inter font-medium text-[14px] text-[#6B7280] mt-2">
+                Auto stop in {timer}s
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={`w-[30%] h-[50px] rounded-xl mt-4 flex flex-row justify-center items-center cursor-pointer 
+          hover:scale-[1.05] transition-all duration-300 
+          ${isRunning ? "bg-[#F3E8FF]" : "bg-gradient-to-br from-[#9B88D4] to-[#B8A4E8]"}
+        `}
+        onClick={() => (isRunning ? stopAroma() : startAroma())}
+      >
+        {isRunning ? (
+          <>
+            <Square size={24} className="text-[#6B21A8] mr-3" />
+            <p className="font-inter font-medium text-[16px] text-[#6B21A8] text-center">
+              Stop Aroma Diffuser
+            </p>
+          </>
+        ) : (
+          <>
+            <Play size={24} className="text-white mr-3" />
+            <p className="font-inter font-medium text-[16px] text-white text-center">
+              Start Aroma Diffuser
+            </p>
+          </>
+        )}
+      </div>
+
+      <p className="font-inter font-medium text-[14px] text-[#6B7280] mt-3">
+        Aromatherapy will run for 10 seconds
+      </p>
+    </div>
+  );
+}

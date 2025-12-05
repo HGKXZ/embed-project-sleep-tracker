@@ -2,13 +2,13 @@
 
 import Sidebar from "@/components/Sidebar"
 import Topbar from "@/components/Topbar"
-import TrackingCard from "@/components/TrackingCard"
 import { Droplet, Lightbulb, Sun, Thermometer, Volume2 } from "lucide-react"
 import { dailyRecordData } from "../../../mock";
 import { useState, useEffect } from "react";
 import { SessionRecords, HourlyRecords } from "../../../interface"
 
 import axios from "axios"
+import DiffuserCard from "@/components/DiffuserCard"
 
 export default function Forest() {
   const [loading, setLoading] = useState(false)
@@ -52,13 +52,13 @@ export default function Forest() {
               <Topbar/>
               <div className="w-full h-[1441px] bg-[#F3F4F6] mt-[80px] p-7">
             <div className="flex flex-col items-center">
-              <TrackingCard/>
+              <DiffuserCard/>
             </div>
             <div className="flex flex-row items-center mt-10">
               <Lightbulb size={32} className="text-[#A855F7] ml-15"/>
               <p className="font-inter font-bold text-[18px] text-[#1E2A4A] ml-2">Real-time Environment Insights</p>
             </div>
-            <div className="flex flex-row gap-7 mt-7 justify-center w-[90%] self-center">
+            <div className="flex flex-row gap-7 mt-7 justify-center w-[90%] mx-auto">
                <div className="w-[25%] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col hover:scale-[1.05] transition-all duration-300">
                 <div className="w-full h-[55px] flex flex-row justify-between items-center mb-6">
                   <div className="w-[55px] h-[55px] bg-[#FFEDD5] rounded-xl flex justify-center items-center">
