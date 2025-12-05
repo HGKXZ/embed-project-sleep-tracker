@@ -15,10 +15,22 @@ export default function Dashboard() {
   // Back end connect
   const [dailyRecordData, setDailyRecordData] = useState<SessionRecords>();
   const [hourlyRecordData, setHourlyRecordData] = useState<HourlyRecords[]>([]);
+  const [isOn, setIsOn] = useState(false);
 
-  useEffect(() => {
+  function handleToggle() {
+    let target = 'START'
+    if(isOn) target = 'END'
     axios
-      .get("http://localhost:3000/api/daily-report?date=2025-11-14")
+      .post(`http://localhost:3000/api/record-status?type=${target}`)
+      .catch(err => {
+        console.error(err)
+      })
+    loadData()
+  }
+
+  function loadData(){
+      axios
+      .get("http://localhost:3000/api/daily-report") //urgent: ?date=2025-11-29
       .then(response => {  
         setDailyRecordData(response.data.response.data.sleepReport)
         setHourlyRecordData(response.data.response.data.hourlyData)
@@ -26,9 +38,23 @@ export default function Dashboard() {
       .catch(err => {
         console.error(err)
       })
+      axios
+      .get("http://localhost:3000/api/current-status")
+      .then(response => {  
+        console.log(response.data.response.data)
+        if(response.data.response.data.type == 'START') {setIsOn(true)}
+        else {setIsOn(false)}
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
+  useEffect(() => {
+    loadData()
   }, []);
 
-  const [isOn, setIsOn] = useState(false);
+
   const formatTime = (duration: number) => {
     const h = Math.floor(duration / 3600);
     const m = Math.floor((duration % 3600) / 60);
@@ -56,7 +82,7 @@ export default function Dashboard() {
                   <p className="font-inter font-regular text-[16px] text-[#4B5563]">Activates the device and begins the startup process.</p>
                 </div>
                 <div className="w-[20%] flex items-center justify-end mr-4">
-                  <div onClick={() => setIsOn(!isOn)} className={`w-16 h-8 flex items-center rounded-full cursor-pointer p-1 transition-colors duration-300 ${
+                  <div onClick={() => {setIsOn(!isOn); handleToggle()}} className={`w-16 h-8 flex items-center rounded-full cursor-pointer p-1 transition-colors duration-300 ${
                   isOn ? "bg-violet-500" : "bg-gray-300"}`}>
                     <motion.div
                     className="w-6 h-6 bg-white rounded-full shadow-md"

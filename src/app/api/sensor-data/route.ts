@@ -10,9 +10,9 @@ import {
 } from 'firebase/firestore';
 
 /*
-  POST /api/sensor-data?temperature=23.5&humidity=45.2&light=300&sound=55.1
+  get /api/sensor-data?temperature=23.5&humidity=45.2&light=300&sound=55.1
 */
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
 

@@ -4,15 +4,44 @@ import {
   collection,
   getDocs,
   query,
-  where
+  where,
+  orderBy
 } from 'firebase/firestore';
-import { Timestamp } from 'firebase/firestore';
+
+async function checkRecentSession() {
+  const sessionQuery = query(
+    collection(db, 'sleep_sessions'),
+    where('type', '==', 'END')
+  );
+
+  const snap = await getDocs(sessionQuery);
+
+   const sessions = snap.docs.map(doc => {
+    const data = doc.data();
+    const ts = data.timestamp;
+
+    const jsDate = ts instanceof Date ? ts : ts.toDate();
+
+    return {
+      ...data,
+      _jsDate: jsDate
+    };
+  });
+
+  // Sort manually: newest timestamp first
+  sessions.sort((a, b) => b._jsDate.getTime() - a._jsDate.getTime());
+
+  const mostRecent = sessions[0]._jsDate;
+
+  return mostRecent.toISOString().split('T')[0];
+}
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const dateRaw = searchParams.get('date');
-    const date = dateRaw ?? new Date().toISOString().split('T')[0];
+
+    let date = dateRaw || (await checkRecentSession());
 
     const [y, m, d] = date.split('-').map(Number);
     if (!y || !m || !d || m < 1 || m > 12 || d < 1 || d > 31) {
@@ -50,7 +79,6 @@ export async function GET(req: Request) {
     );
     const hourlySnap = await getDocs(hourlyQuery);
     const hourlyData = hourlySnap.docs.map(doc => doc.data());
-    console.log(hourlyData);
 
     return NextResponse.json({
       success: true,
