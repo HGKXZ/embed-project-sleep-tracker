@@ -10,6 +10,8 @@ export default function TrackingCard() {
         setIsTracking(!isTracking);
     }
 
+    
+
     return (
         <div className="w-[90%] h-[500px] bg-white rounded-2xl shadow-lg p-7 border-b border-[#E5E7EB] flex flex-col items-center mt-7">
             <div className="relative w-full h-[320px] flex justify-center">

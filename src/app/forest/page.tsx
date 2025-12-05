@@ -5,14 +5,45 @@ import Topbar from "@/components/Topbar"
 import TrackingCard from "@/components/TrackingCard"
 import { Droplet, Lightbulb, Sun, Thermometer, Volume2 } from "lucide-react"
 import { dailyRecordData } from "../../../mock";
+import { useState, useEffect } from "react";
+import { SessionRecords, HourlyRecords } from "../../../interface"
+
+import axios from "axios"
 
 export default function Forest() {
+  const [loading, setLoading] = useState(false)
+  const [dailyRecordData, setDailyRecordData] = useState<any[]>();
+  const [dailyRecordDataReversed, setDailyRecordDataReversed] = useState<any[]>();
+  
+
+  async function loadData() {
+  const today = new Date();
+  const end = today.toISOString().split("T")[0];
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - 7);
+  const start = startDate.toISOString().split("T")[0];
+
+  axios
+    .get(`http://localhost:3000/api/current-sensor`)
+    .then(response => {
+      const raw = response.data.response.data;
+      setDailyRecordData(raw);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+
+
+  useEffect(() => {
+      loadData()
+    }, []);
 
   const environment = {
-    humidity: dailyRecordData[dailyRecordData.length -1].averageHumidity,
-    lightExposure: dailyRecordData[dailyRecordData.length -1].averageLightExposure,
-    soundLevel: dailyRecordData[dailyRecordData.length -1].averageSoundLevel,
-    temperature: dailyRecordData[dailyRecordData.length -1].averageTemperature,
+    humidity: dailyRecordData?.humidity,
+    lightExposure: dailyRecordData?.light,
+    soundLevel: dailyRecordData?.sound_level,
+    temperature: dailyRecordData?.temperature,
   }
 
   return (

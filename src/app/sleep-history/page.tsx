@@ -20,8 +20,14 @@ export default function SleepHistory() {
   
 
   async function loadData() {
+  const today = new Date();
+  const end = today.toISOString().split("T")[0];
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - 7);
+  const start = startDate.toISOString().split("T")[0];
+
   axios
-    .get("http://localhost:3000/api/reports?start=2025-11-28&end=2025-11-29")
+    .get(`http://localhost:3000/api/reports?start=${start}&end=${end}`)
     .then(response => {
 
       const raw = response.data.response.data.reports;
