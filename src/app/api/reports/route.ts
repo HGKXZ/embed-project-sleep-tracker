@@ -50,6 +50,10 @@ export async function GET(req: Request) {
       date: doc.data().date,
       sleepQualityScore: doc.data().sleepQualityScore,
       totalSleepDuration: doc.data().totalSleepDuration,
+      averageHumidity: doc.data().averageHumidity,
+      averageLightExposure: doc.data().averageLightExposure,
+      averageSoundLevel: doc.data().averageSoundLevel,
+      averageTemperature : doc.data().averageTemperature,
     }));
 
     reports.sort((a, b) => a.date.toDate() - b.date.toDate());

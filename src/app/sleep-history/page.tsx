@@ -5,12 +5,50 @@ import Sidebar from "@/components/Sidebar"
 import SleepQualityTrendCard from "@/components/SleepQualityTrendCard"
 import Topbar from "@/components/Topbar"
 import { ChevronDown, ChevronUp, TriangleAlert, Trophy } from "lucide-react";
-import { useState } from "react";
-import { dailyRecordData, hourlyRecordData } from "../../../mock";
+import { useState, useEffect } from "react";
+import { hourlyRecordData } from "../../../mock";
+import { SessionRecords, HourlyRecords } from "../../../interface"
+
+import axios from "axios"
+
+
 
 export default function SleepHistory() {
+  const [loading, setLoading] = useState(false)
+  const [dailyRecordData, setDailyRecordData] = useState<SessionRecords[]>();
+  const [dailyRecordDataReversed, setDailyRecordDataReversed] = useState<SessionRecords[]>();
+  
 
-  const dailyRecordDataReversed = [...dailyRecordData].reverse();
+  async function loadData() {
+  axios
+    .get("http://localhost:3000/api/reports?start=2025-11-28&end=2025-11-29")
+    .then(response => {
+
+      const raw = response.data.response.data.reports;
+
+      // Convert Firestore timestamp fields
+      const converted = raw.map(item => ({
+        ...item,
+        date: item.date?.seconds
+          ? new Date(item.date.seconds * 1000).toISOString()
+          : item.date
+      }));
+      console.log(converted)
+
+      setDailyRecordData(converted);
+      setDailyRecordDataReversed([...converted].reverse());
+
+      console.log(converted);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+
+
+  useEffect(() => {
+      loadData()
+    }, []);
 
   const getQualityBackgroundColor = (quality: number) => {
     if (quality >= 80) return "#4ADE80" 
@@ -25,47 +63,57 @@ export default function SleepHistory() {
   };
 
   const formatTime = (minutes: number) => {
-    const h = Math.floor(minutes / 60);
-    const m = minutes % 60;
-    return `${h}h ${m}m`;
+    const h = Math.floor(minutes / 3600);
+    const m = Math.floor((minutes % 3600) / 60);
+    const s = minutes % 60;
+    return `${h}h ${m}m ${s}s`;
   };
   
   const getAverageSleepTime = () => {
-    const totalMinutes = dailyRecordData.reduce((sum, record) => sum + record.totalSleepDuration, 0);
-    const averageMinutes = totalMinutes / dailyRecordData.length;
+    if (!dailyRecordData || dailyRecordData.length === 0) return 0;
+    const totalMinutes = dailyRecordData?.reduce((sum, record) => sum + record.totalSleepDuration, 0);
+    const averageMinutes = totalMinutes / dailyRecordData?.length;
     return formatTime(Math.round(averageMinutes));
   }
 
   const getAverageQuality = () => {
+    if (!dailyRecordData || dailyRecordData.length === 0) return 0;
+
     const totalQuality = dailyRecordData.reduce((sum, record) => sum + record.sleepQualityScore, 0);
     return Math.round(totalQuality / dailyRecordData.length);
   }
   
   const getAverageLightExposure = () => {
+    if (!dailyRecordData || dailyRecordData.length === 0) return 0;
     const totalLight = dailyRecordData.reduce((sum, record) => sum + record.averageLightExposure, 0);
     return Math.round(totalLight / dailyRecordData.length);
   }
   const getAverageTemperature = () => {
+    if (!dailyRecordData || dailyRecordData.length === 0) return 0;
     const totalTemp = dailyRecordData.reduce((sum, record) => sum + record.averageTemperature, 0);
     return Math.round(totalTemp / dailyRecordData.length);
   }
   const getAverageHumidity = () => {
+    if (!dailyRecordData || dailyRecordData.length === 0) return 0;
     const totalHumid = dailyRecordData.reduce((sum, record) => sum + record.averageHumidity, 0);
     return Math.round(totalHumid / dailyRecordData.length);
   }
   const getAverageNoiseLevel = () => {
+    if (!dailyRecordData || dailyRecordData.length === 0) return 0;
     const totalNoise = dailyRecordData.reduce((sum, record) => sum + record.averageSoundLevel, 0);
     return Math.round(totalNoise / dailyRecordData.length);
   }
 
   const getBestNight = () => {
+    if (!dailyRecordData || dailyRecordData.length === 0) return 0;
     const bestRecord = dailyRecordData.reduce((best, record) => record.sleepQualityScore > best.sleepQualityScore ? record : best, dailyRecordData[0]);
-    return `${formatDate(bestRecord.timestamp)} (${bestRecord.sleepQualityScore}%)`;
+    return `${formatDate(bestRecord.date)} (${bestRecord.sleepQualityScore}%)`;
   }
 
   const getWorstNight = () => {
+    if (!dailyRecordData || dailyRecordData.length === 0) return 0;
     const worstRecord = dailyRecordData.reduce((worst, record) => record.sleepQualityScore < worst.sleepQualityScore ? record : worst, dailyRecordData[0]);
-    return `${formatDate(worstRecord.timestamp)} (${worstRecord.sleepQualityScore}%)`;
+    return `${formatDate(worstRecord.date)} (${worstRecord.sleepQualityScore}%)`;
   }
   function formatDate(timestamp: string | number | Date): string {
       const date = new Date(timestamp);
@@ -93,13 +141,12 @@ export default function SleepHistory() {
             <SleepQualityTrendCard dailyRecordData={dailyRecordData}/>
              <div className="flex flex-col w-full mt-7">
               <p className="font-inter font-semibold text-[20px] text-[#1E293B]">Daily Sleep Records</p>
-              {dailyRecordDataReversed.map((data: SessionRecords) => (
-                <div key={data.session_id}>
+              {dailyRecordDataReversed?.map((data: SessionRecords) => (
+                <div key={data.date}>
                   <div className="w-full h-[100px] bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] flex flex-row p-7 hover:scale-[1.05] transition-all duration-300 mt-5 items-center">
                     <div className="w-[18px] h-[18px] rounded-full" style={{ backgroundColor: getQualityBackgroundColor(data.sleepQualityScore) }}></div>
                     <div className="flex flex-col w-[20%] ml-6">
-                      <p className="font-inter font-semibold text-[18px] text-[#1E293B]">{formatDate(data.timestamp)}</p>
-                      <p className="font-inter font-regular text-[16px] text-[#4B5563]">{data.day}</p>
+                      <p className="font-inter font-semibold text-[18px] text-[#1E293B]">{formatDate(data.date)}</p>
                     </div>
                     <div className="flex flex-col w-[15%] ml-6">
                       <p className="font-inter font-regular text-[16px] text-[#4B5563]">Total Sleep</p>
@@ -126,14 +173,14 @@ export default function SleepHistory() {
                       <p className={`font-inter font-semibold text-[16px]`}>{data.averageSoundLevel} dB</p>
                     </div>
                     <div className="w-[5%] flex justify-end">
-                      { visibleSessions[data.session_id] ? <ChevronUp onClick={() => toggleSession(data.session_id)} className="font-inter font-medium text-[16px] cursor-pointer"></ChevronUp>
-                        : <ChevronDown onClick={() => toggleSession(data.session_id)} className="font-inter font-medium text-[16px] cursor-pointer"></ChevronDown>
+                      { visibleSessions[data.date] ? <ChevronUp onClick={() => toggleSession(data.date)} className="font-inter font-medium text-[16px] cursor-pointer"></ChevronUp>
+                        : <ChevronDown onClick={() => toggleSession(data.date)} className="font-inter font-medium text-[16px] cursor-pointer"></ChevronDown>
                       }
                     </div>
                   </div>
                   <div className={`overflow-hidden transition-all duration-300 ease-in-out ${visibleSessions[data.session_id] ? "max-h-[500px] mt-2" : "max-h-0"}`}>
-                    {visibleSessions[data.session_id] && <HourlySleepQualityCard timestamp={data.timestamp} hourlyRecordData={hourlyRecordData.filter(
-                      record => record.timestamp.startsWith(data.timestamp.slice(0, 10))
+                    {visibleSessions[data.date] && <HourlySleepQualityCard timestamp={data.date} hourlyRecordData={hourlyRecordData.filter(
+                      record => record.timestamp.startsWith(data.date.slice(0, 10))
                     )}/>}
                   </div>
                 </div>

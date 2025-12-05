@@ -60,7 +60,7 @@ export default function HourlySleepQualityCard({
         </p>
 
         <p className="font-inter font-regular text-[18px] text-[#4B5563]">
-          {jsDate ? formatDate(jsDate) : "loading..."}
+          {jsDate ? formatDate(jsDate) : ""}
         </p>
       </div>
 

@@ -38,7 +38,7 @@ export default function Dashboard() {
   function loadData(){
       setLoading(true)
       axios
-      .get("http://localhost:3000/api/daily-report") //urgent: ?date=2025-11-29
+      .get("/api/daily-report") //urgent: ?date=2025-11-29
       .then(response => {  
         setDailyRecordData(response.data.response.data.sleepReport)
         setHourlyRecordData(response.data.response.data.hourlyData)
@@ -47,7 +47,7 @@ export default function Dashboard() {
         console.error(err)
       })
       axios
-      .get("http://localhost:3000/api/current-status")
+      .get("/api/current-status")
       .then(response => {  
         console.log(response.data.response.data)
         if(response.data.response.data.type == 'START') {setIsOn(true)}
@@ -108,7 +108,12 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
+            <div className="w-full bg-white  text-[#4B5563] mt-2  rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col hover:scale-[1.05] transition-all duration-300">
+              Sleep Data from Yesterday!
+            </div>
+
             <div className="w-full h-[200px] flex flex-row gap-5 justify-center items-center mt-5">
+              
               <div className="w-[33%] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col hover:scale-[1.05] transition-all duration-300">
                 <div className="w-full h-[55px] flex flex-row justify-between items-center mb-6">
                   <div className="w-[55px] h-[55px] bg-[#EFF6FF] rounded-xl flex justify-center items-center">
