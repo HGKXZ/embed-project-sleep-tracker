@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import db from '@/lib/firebase/firestore';
+import axios from 'axios';
+
 import {
   collection,
   addDoc,
@@ -70,6 +72,13 @@ export async function GET(req: Request) {
       sound_level: sound_level
     };
     const docRef = await addDoc(collection(db, 'sensor_readings'), payload);
+
+    //------ Blink------
+    axios.get(`https://sgp1.blynk.cloud/external/api/update?token=y9gtpw7iauYC0CJSNe2JHwOjznVsrBTi&A0=${humidity}`);
+    axios.get(`https://sgp1.blynk.cloud/external/api/update?token=y9gtpw7iauYC0CJSNe2JHwOjznVsrBTi&A1=${light}`);
+    axios.get(`https://sgp1.blynk.cloud/external/api/update?token=y9gtpw7iauYC0CJSNe2JHwOjznVsrBTi&A2=${temperature}`);
+    axios.get(`https://sgp1.blynk.cloud/external/api/update?token=y9gtpw7iauYC0CJSNe2JHwOjznVsrBTi&A3=${sound_level}`);
+
 
     return NextResponse.json({
       success: true,
