@@ -69,7 +69,8 @@ export async function GET(req: Request) {
       temperature: temperature,
       humidity: humidity,
       light: light,
-      sound_level: sound_level
+      sound_level: sound_level,
+      is_processed: false
     };
     const docRef = await addDoc(collection(db, 'sensor_readings'), payload);
 
