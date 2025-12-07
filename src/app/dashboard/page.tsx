@@ -42,7 +42,7 @@ export default function Dashboard() {
       .then(response => {  
         console.log(response);
         setDailyRecordData(response.data.response.data.sleepReport)
-        setIntervalRecordData(response.data.response.data.IntervalData)
+        setIntervalRecordData(response.data.response.data.IntervalData || [])
       })
       .catch(err => {
         console.error(err)
