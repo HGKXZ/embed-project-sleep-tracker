@@ -1,13 +1,13 @@
 "use client";
 
-import HourlySleepQualityCard from "@/components/HourlySleepQualityCard";
+import IntervalSleepQualityCard from "@/components/HourlySleepQualityCard";
 import Sidebar from "@/components/Sidebar"
 import SleepQualityTrendCard from "@/components/SleepQualityTrendCard"
 import Topbar from "@/components/Topbar"
 import { ChevronDown, ChevronUp, TriangleAlert, Trophy } from "lucide-react";
 import { useState, useEffect } from "react";
-import { hourlyRecordData } from "../../../mock";
-import { SessionRecords, HourlyRecords } from "../../../interface"
+import { intervalRecordData } from "../../../mock";
+import { SessionRecords } from "../../../interface"
 
 import axios from "axios"
 
@@ -27,13 +27,13 @@ export default function SleepHistory() {
   const start = startDate.toISOString().split("T")[0];
 
   axios
-    .get(`http://localhost:3000/api/reports?start=${start}&end=${end}`)
+    .get(`/api/reports?start=${start}&end=${end}`)
     .then(response => {
 
       const raw = response.data.response.data.reports;
 
       // Convert Firestore timestamp fields
-      const converted = raw.map(item => ({
+      const converted = raw.map((item: any) => ({
         ...item,
         date: item.date?.seconds
           ? new Date(item.date.seconds * 1000).toISOString()
@@ -185,7 +185,7 @@ export default function SleepHistory() {
                     </div>
                   </div>
                   <div className={`overflow-hidden transition-all duration-300 ease-in-out ${visibleSessions[data.session_id] ? "max-h-[500px] mt-2" : "max-h-0"}`}>
-                    {visibleSessions[data.date] && <HourlySleepQualityCard timestamp={data.date} hourlyRecordData={hourlyRecordData.filter(
+                    {visibleSessions[data.date] && <IntervalSleepQualityCard timestamp={data.date} intervalRecordData={intervalRecordData.filter(
                       record => record.timestamp.startsWith(data.date.slice(0, 10))
                     )}/>}
                   </div>

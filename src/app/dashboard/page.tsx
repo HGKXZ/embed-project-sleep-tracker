@@ -7,14 +7,14 @@ import EnvironmentCard from "@/components/EnvironmentCard"
 import SleepInsightsCard from "@/components/SleepInsightsCard"
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import HourlySleepQualityCard from "@/components/HourlySleepQualityCard"
+import IntervalSleepQualityCard from "@/components/HourlySleepQualityCard"
 import axios from "axios"
-import { SessionRecords, HourlyRecords } from "../../../interface"
+import { SessionRecords, IntervalRecords } from "../../../interface"
 export default function Dashboard() {
 
   // Back end connect
   const [dailyRecordData, setDailyRecordData] = useState<SessionRecords>();
-  const [hourlyRecordData, setHourlyRecordData] = useState<HourlyRecords[]>([]);
+  const [intervalRecordData, setIntervalRecordData] = useState<IntervalRecords[]>([]);
   const [isOn, setIsOn] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +22,7 @@ export default function Dashboard() {
     let target = 'START'
     if(isOn) target = 'END'
     axios
-      .get(`http://localhost:3000/api/record-status?type=${target}`)
+      .get(`/api/record-status?type=${target}`)
       .then(response => {
         setLoading(true)  
         loadData()
@@ -40,8 +40,9 @@ export default function Dashboard() {
       axios
       .get("/api/daily-report") //urgent: ?date=2025-11-29
       .then(response => {  
+        console.log(response);
         setDailyRecordData(response.data.response.data.sleepReport)
-        setHourlyRecordData(response.data.response.data.hourlyData)
+        setIntervalRecordData(response.data.response.data.IntervalData)
       })
       .catch(err => {
         console.error(err)
@@ -157,7 +158,7 @@ export default function Dashboard() {
             </div>
             <div className="w-full h-[450px] flex flex-row mt-5 gap-5">
               <div className="w-[70%]">
-                <HourlySleepQualityCard timestamp={dailyRecordData?.date} hourlyRecordData={hourlyRecordData}/>
+                <IntervalSleepQualityCard timestamp={dailyRecordData?.date} intervalRecordData={intervalRecordData}/>
               </div>
               <div className="w-[30%]">
                 <EnvironmentCard environment={environment}/>

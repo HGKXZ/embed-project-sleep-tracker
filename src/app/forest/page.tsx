@@ -5,15 +5,14 @@ import Topbar from "@/components/Topbar"
 import { Droplet, Lightbulb, Sun, Thermometer, Volume2 } from "lucide-react"
 import { dailyRecordData } from "../../../mock";
 import { useState, useEffect } from "react";
-import { SessionRecords, HourlyRecords } from "../../../interface"
 
 import axios from "axios"
 import DiffuserCard from "@/components/DiffuserCard"
 
 export default function Forest() {
   const [loading, setLoading] = useState(false)
-  const [dailyRecordData, setDailyRecordData] = useState<any[]>();
-  const [dailyRecordDataReversed, setDailyRecordDataReversed] = useState<any[]>();
+  const [dailyRecordData, setDailyRecordData] = useState<any>();
+  const [dailyRecordDataReversed, setDailyRecordDataReversed] = useState<any>();
   const [isDiffuserOn, setDiffuser] = useState(false)
   
 
@@ -25,7 +24,7 @@ export default function Forest() {
     const start = startDate.toISOString().split("T")[0];
 
     axios
-      .get(`http://localhost:3000/api/current-sensor`)
+      .get(`/api/current-sensor`)
       .then(response => {
         const raw = response.data.response.data;
         setDailyRecordData(raw);

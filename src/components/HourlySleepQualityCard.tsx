@@ -1,6 +1,6 @@
 "use client";
 
-import { HourlyRecords } from "../../interface";
+import { IntervalRecords } from "../../interface";
 import {
   XAxis,
   YAxis,
@@ -12,9 +12,9 @@ import {
   Bar,
 } from "recharts";
 
-interface HourlySleepQualityCardProps {
+interface IntervalSleepQualityCardProps {
   timestamp: any; // Firestore Timestamp or JS Date
-  hourlyRecordData: HourlyRecords[];
+  intervalRecordData: IntervalRecords[];
 }
 
 function toJsDate(ts: any): Date | null {
@@ -27,10 +27,10 @@ function toJsDate(ts: any): Date | null {
   return new Date(ts);
 }
 
-export default function HourlySleepQualityCard({
+export default function IntervalSleepQualityCard({
   timestamp,
-  hourlyRecordData,
-}: HourlySleepQualityCardProps) {
+  intervalRecordData,
+}: IntervalSleepQualityCardProps) {
   const jsDate = toJsDate(timestamp);
 
   function formatHour(timestamp: string | number | Date): string {
@@ -66,7 +66,7 @@ export default function HourlySleepQualityCard({
 
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
-          data={hourlyRecordData.map((record) => ({
+          data={intervalRecordData.map((record) => ({
             date: formatHour(record.timestamp),
             quality: record.sleep_score,
           }))}

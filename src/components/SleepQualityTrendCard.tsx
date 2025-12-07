@@ -11,7 +11,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { SessionRecords, HourlyRecords } from "../../interface"
+import { SessionRecords } from "../../interface"
 
 interface SleepQualityTrendCardProps {
   dailyRecordData: SessionRecords[] | undefined;
@@ -51,7 +51,7 @@ export default function SleepQualityTrendCard({ dailyRecordData }: SleepQualityT
             </div>
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart
-                data={isQuality ? dailyRecordData?.map(record => ({ date: formatDate(record.date), quality: record.sleepQualityScore })) : dailyRecordData.map(record => ({ date: formatDate(record.date), duration: record.totalSleepDuration }))}
+                data={isQuality ? dailyRecordData?.map(record => ({ date: formatDate(record.date), quality: record.sleepQualityScore })) : dailyRecordData?.map(record => ({ date: formatDate(record.date), duration: record.totalSleepDuration }))}
                 margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
                 >
                 <CartesianGrid strokeDasharray="3 3" />

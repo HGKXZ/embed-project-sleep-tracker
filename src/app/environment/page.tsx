@@ -4,12 +4,12 @@ import Topbar from "@/components/Topbar"
 import EnvironmentCard from "@/components/EnvironmentCard"
 import SleepInsightsCard from "@/components/SleepInsightsCard"
 import { useState, useEffect } from "react";
-import { SessionRecords, HourlyRecords } from "../../../interface"
+import { SessionRecords, IntervalRecords } from "../../../interface"
 import axios from "axios"
 
 export default function Environment() {
   const [dailyRecordData, setDailyRecordData] = useState<SessionRecords>();
-  const [hourlyRecordData, setHourlyRecordData] = useState<HourlyRecords[]>([]);
+  const [hourlyRecordData, setHourlyRecordData] = useState<IntervalRecords[]>([]);
   const [isOn, setIsOn] = useState(false);
   const [loading, setLoading] = useState(false);
   function loadData(){

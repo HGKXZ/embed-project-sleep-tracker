@@ -16,7 +16,7 @@ async function checkRecentSession() {
 
   const snap = await getDocs(sessionQuery);
 
-   const sessions = snap.docs.map(doc => {
+  const sessions = snap.docs.map(doc => {
     const data = doc.data();
     const ts = data.timestamp;
 
