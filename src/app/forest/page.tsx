@@ -14,24 +14,27 @@ export default function Forest() {
   const [loading, setLoading] = useState(false)
   const [dailyRecordData, setDailyRecordData] = useState<any[]>();
   const [dailyRecordDataReversed, setDailyRecordDataReversed] = useState<any[]>();
+  const [isDiffuserOn, setDiffuser] = useState(false)
   
 
   async function loadData() {
-  const today = new Date();
-  const end = today.toISOString().split("T")[0];
-  const startDate = new Date();
-  startDate.setDate(startDate.getDate() - 7);
-  const start = startDate.toISOString().split("T")[0];
+    const today = new Date();
+    const end = today.toISOString().split("T")[0];
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 7);
+    const start = startDate.toISOString().split("T")[0];
 
-  axios
-    .get(`http://localhost:3000/api/current-sensor`)
-    .then(response => {
-      const raw = response.data.response.data;
-      setDailyRecordData(raw);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    axios
+      .get(`http://localhost:3000/api/current-sensor`)
+      .then(response => {
+        const raw = response.data.response.data;
+        setDailyRecordData(raw);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    
   }
 
 
