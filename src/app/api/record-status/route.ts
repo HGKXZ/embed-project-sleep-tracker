@@ -4,6 +4,7 @@ import {
   collection,
   getDocs,
   addDoc,
+  updateDoc,
   query,
   orderBy,
   limit
@@ -36,10 +37,8 @@ export async function GET(req: Request) {
     const q = query(statusRef, orderBy("timestamp", "desc"), limit(1));
     const snapshot = await getDocs(q);
 
-    let latestType: StatusType | null = null;
-    if (snapshot.docs.length) {
-        latestType = snapshot.docs[0].data().type as StatusType;
-    }
+    const latestDoc = snapshot.docs[0] ?? null;
+    const latestType = latestDoc?.data()?.type ?? null;
 
     if (latestType === type) {
         return NextResponse.json(
@@ -51,47 +50,62 @@ export async function GET(req: Request) {
             { status: 400 }
         );
     }
-    
-    // --------------------------------------------------------------------------------------------
-    // This part is to send api to Cloud AI, which should be implemented later
-
-    // const cloudResponse = await fetch('PUT_URL_HERE_NA_JA', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ type, timestamp: Timestamp.now().toDate().toISOString() })
-    // });
-
-    // if (!cloudResponse.ok) {
-    //   return NextResponse.json(
-    //     {
-    //       success: false,
-    //       response: null,
-    //       errors: [{ code: cloudResponse.status, message: 'Failed to send to Cloud AI' }]
-    //     },
-    //     { status: cloudResponse.status }
-    //   );
-    // }
-    // --------------------------------------------------------------------------------------------
 
     // Save status in Firestore
-    const docRef = await addDoc(statusRef, {
-      type,
-      timestamp: Timestamp.now()
-    });
+    if (type == "START") {
+      const docRef = await addDoc(statusRef, {
+        type,
+        timestamp: Timestamp.now()
+      });
 
-    return NextResponse.json(
-      {
-        success: true,
-        response: { 
-            id: docRef.id, 
-            timestamp: Timestamp.now().toDate().toISOString(),
-            type
+      return NextResponse.json(
+        {
+          success: true,
+          response: { 
+              id: docRef.id, 
+              timestamp: Timestamp.now().toDate().toISOString(),
+              type
+          },
+          errors: []
         },
-        errors: []
-      },
-      { status: 201 }
-    );
-    
+        { status: 201 }
+      );
+    }
+
+    if (type === "END") {
+      if (!latestDoc) {
+        // No START exists to end
+        return NextResponse.json(
+          {
+            success: false,
+            response: null,
+            errors: [{ code: 400, message: "No START session to end" }],
+          },
+          { status: 400 }
+        );
+      }
+
+      const endedAt = Timestamp.now();
+
+      await updateDoc(latestDoc.ref, {
+        type: "END",
+        ended_at: endedAt,
+      });
+
+      return NextResponse.json(
+        {
+          success: true,
+          response: {
+            id: latestDoc.id,
+            type: "END",
+            timestamp: latestDoc.data().timestamp.toDate().toISOString(),
+            ended_at: endedAt.toDate().toISOString(),
+          },
+          errors: [],
+        },
+        { status: 200 }
+      );
+    }
   } catch (err) {
     return NextResponse.json(
       {
