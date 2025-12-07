@@ -10,6 +10,7 @@ import { intervalRecordData } from "../../../mock";
 import { SessionRecords } from "../../../interface"
 
 import axios from "axios"
+import { roundTo } from "../utils/math";
 
 
 
@@ -160,23 +161,23 @@ export default function SleepHistory() {
                     </div>
                     <div className="flex flex-col w-[10%] ml-6">
                       <p className="font-inter font-regular text-[16px] text-[#4B5563]">Quality</p>
-                      <p className={`font-inter font-semibold text-[18px] text-[${getQualityTextColor(data.sleepQualityScore)}]`}>{data.sleepQualityScore}%</p>
+                      <p className={`font-inter font-semibold text-[18px] text-[${getQualityTextColor(data.sleepQualityScore)}]`}>{roundTo(data.sleepQualityScore)}%</p>
                     </div>
                     <div className="flex flex-col w-[10%] ml-6">
                       <p className="font-inter font-regular text-[16px] text-[#4B5563]">Light</p>
-                      <p className={`font-inter font-semibold text-[16px]`}>{data.averageLightExposure} lux</p>
+                      <p className={`font-inter font-semibold text-[16px]`}>{roundTo(data.averageLightExposure)} lux</p>
                     </div>
                     <div className="flex flex-col w-[10%] ml-6">
                       <p className="font-inter font-regular text-[16px] text-[#4B5563]">Temp</p>
-                      <p className={`font-inter font-semibold text-[16px]`}>{data.averageTemperature} °C</p>
+                      <p className={`font-inter font-semibold text-[16px]`}>{roundTo(data.averageTemperature)} °C</p>
                     </div>
                     <div className="flex flex-col w-[10%] ml-6">
                       <p className="font-inter font-regular text-[16px] text-[#4B5563]">Humid</p>
-                      <p className={`font-inter font-semibold text-[16px]`}>{data.averageHumidity} %</p>
+                      <p className={`font-inter font-semibold text-[16px]`}>{roundTo(data.averageHumidity)} %</p>
                     </div>
                     <div className="flex flex-col w-[10%] ml-6">
                       <p className="font-inter font-regular text-[16px] text-[#4B5563]">Noise</p>
-                      <p className={`font-inter font-semibold text-[16px]`}>{data.averageSoundLevel} dB</p>
+                      <p className={`font-inter font-semibold text-[16px]`}>{roundTo(data.averageSoundLevel)} dB</p>
                     </div>
                     <div className="w-[5%] flex justify-end">
                       { visibleSessions[data.date] ? <ChevronUp onClick={() => toggleSession(data.date)} className="font-inter font-medium text-[16px] cursor-pointer"></ChevronUp>

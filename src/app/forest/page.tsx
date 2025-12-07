@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 
 import axios from "axios"
 import DiffuserCard from "@/components/DiffuserCard"
+import { toHumidityQuality, toLightQuality, toSoundQuality, toTempQuality } from "../utils/qualityUtil";
 
 export default function Forest() {
   const [loading, setLoading] = useState(false)
@@ -66,7 +67,7 @@ export default function Forest() {
                   <div className="w-[55px] h-[55px] bg-[#FFEDD5] rounded-xl flex justify-center items-center">
                     <Thermometer size={20} className="text-[#F97316]"/>
                   </div>
-                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">Optimal</p>
+                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">{toTempQuality(environment.temperature)}</p>
                 </div>
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Temperature</p>
                 <p className="font-inter font-bold text-[34px]">{environment.temperature} °C</p>
@@ -76,7 +77,7 @@ export default function Forest() {
                   <div className="w-[55px] h-[55px] bg-[#DBEAFE] rounded-xl flex justify-center items-center">
                     <Volume2 size={20} className="text-[#3B82F6]"/>
                   </div>
-                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">Quiet</p>
+                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">{toSoundQuality(environment.soundLevel)}</p>
                 </div>
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Noise Level</p>
                 <p className="font-inter font-bold text-[34px]">{environment.soundLevel} dB</p>
@@ -86,7 +87,7 @@ export default function Forest() {
                   <div className="w-[55px] h-[55px] bg-[#FEF9C3] rounded-xl flex justify-center items-center">
                     <Sun size={20} className="text-[#EAB308]"/>
                   </div>
-                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">Dark</p>
+                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">{toLightQuality(environment.lightExposure)}</p>
                 </div>
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Light Level</p>
                 <p className="font-inter font-bold text-[34px]">{environment.lightExposure} lux</p>
@@ -96,7 +97,7 @@ export default function Forest() {
                   <div className="w-[55px] h-[55px] bg-[#CCFBF1] rounded-xl flex justify-center items-center">
                     <Droplet size={20} className="text-[#14B8A6]"/>
                   </div>
-                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">Perfect</p>
+                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">{toHumidityQuality(environment.humidity)}</p>
                 </div>
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Humidity</p>
                 <p className="font-inter font-bold text-[34px]">{environment.humidity}%</p>

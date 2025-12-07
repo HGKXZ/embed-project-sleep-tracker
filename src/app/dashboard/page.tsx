@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import IntervalSleepQualityCard from "@/components/HourlySleepQualityCard"
 import axios from "axios"
 import { SessionRecords, IntervalRecords } from "../../../interface"
+import { roundTo } from "../utils/math"
 export default function Dashboard() {
 
   // Back end connect
@@ -73,10 +74,10 @@ export default function Dashboard() {
   };
   const lastNight = dailyRecordData
   const environment = {
-    humidity: dailyRecordData?.averageHumidity ? dailyRecordData?.averageHumidity : 0,
-    lightExposure: dailyRecordData?.averageLightExposure ? dailyRecordData?.averageLightExposure : 0,
-    soundLevel: dailyRecordData?.averageSoundLevel ? dailyRecordData?.averageSoundLevel : 0,
-    temperature: dailyRecordData?.averageTemperature ? dailyRecordData?.averageTemperature : 0,
+    humidity: roundTo(dailyRecordData?.averageHumidity ?? 0) ? roundTo(dailyRecordData?.averageHumidity ?? 0) : 0,
+    lightExposure: roundTo(dailyRecordData?.averageLightExposure ?? 0) ? roundTo(dailyRecordData?.averageLightExposure ?? 0) : 0,
+    soundLevel: roundTo(dailyRecordData?.averageSoundLevel ?? 0) ? roundTo(dailyRecordData?.averageSoundLevel ?? 0) : 0,
+    temperature: roundTo(dailyRecordData?.averageTemperature ?? 0) ? roundTo(dailyRecordData?.averageTemperature ?? 0) : 0,
   }
 
   return (

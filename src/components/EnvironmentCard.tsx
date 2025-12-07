@@ -1,5 +1,6 @@
 "use client"
 
+import { toHumidityQuality, toLightQuality, toSoundQuality, toTempQuality } from "@/app/utils/qualityUtil";
 import { Droplet, Sun, Thermometer, Volume2 } from "lucide-react";
 import { useState } from "react";
 
@@ -22,7 +23,7 @@ export default function EnvironmentCard({ environment }: EnvironmentCardProps) {
                 </div>
                 <div className="flex flex-col">
                     <p className="font-inter font-medium text-[18px] text-[#1E2A4A]">Light Level</p>
-                    <p className="font-inter font-regular text-[16px] text-[#4B5563]">Optimal</p>
+                    <p className="font-inter font-regular text-[16px] text-[#4B5563]">{toLightQuality(environment.lightExposure ?? 0)}</p>
                 </div>
                 <p className="font-inter font-bold text-[21px] text-[#1E2A4A] ml-auto">{environment.lightExposure} lux</p>
             </div>
@@ -32,7 +33,7 @@ export default function EnvironmentCard({ environment }: EnvironmentCardProps) {
                 </div>
                 <div className="flex flex-col">
                     <p className="font-inter font-medium text-[18px] text-[#1E2A4A]">Temperature</p>
-                    <p className="font-inter font-regular text-[16px] text-[#4B5563]">Perfect</p>
+                    <p className="font-inter font-regular text-[16px] text-[#4B5563]">{toTempQuality(environment.temperature ?? 0)}</p>
                 </div>
                 <p className="font-inter font-bold text-[21px] text-[#1E2A4A] ml-auto">{environment.temperature} °C</p>
             </div>
@@ -42,7 +43,7 @@ export default function EnvironmentCard({ environment }: EnvironmentCardProps) {
                 </div>
                 <div className="flex flex-col">
                     <p className="font-inter font-medium text-[18px] text-[#1E2A4A]">Humidity</p>
-                    <p className="font-inter font-regular text-[16px] text-[#4B5563]">Good</p>
+                    <p className="font-inter font-regular text-[16px] text-[#4B5563]">{toHumidityQuality(environment.humidity ?? 0)}</p>
                 </div>
                 <p className="font-inter font-bold text-[21px] text-[#1E2A4A] ml-auto">{environment.humidity} %</p>
             </div>
@@ -52,7 +53,7 @@ export default function EnvironmentCard({ environment }: EnvironmentCardProps) {
                 </div>
                 <div className="flex flex-col">
                     <p className="font-inter font-medium text-[18px] text-[#1E2A4A]">Noise Level</p>
-                    <p className="font-inter font-regular text-[16px] text-[#4B5563]">Quiet</p>
+                    <p className="font-inter font-regular text-[16px] text-[#4B5563]">{toSoundQuality(environment.soundLevel ?? 0)}</p>
                 </div>
                 <p className="font-inter font-bold text-[21px] text-[#1E2A4A] ml-auto">{environment.soundLevel} dB</p>
             </div>
