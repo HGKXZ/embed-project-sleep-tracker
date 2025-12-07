@@ -73,7 +73,7 @@ export async function GET(req: Request) {
     const sleepReport = sessionSnap.docs[0]?.data() ?? null;
 
     const hourlyQuery = query(
-      collection(db, 'hourly_records'),
+      collection(db, 'interval_records'),
       where('timestamp', '>=', start),
       where('timestamp', '<=', new Date(end))
     );

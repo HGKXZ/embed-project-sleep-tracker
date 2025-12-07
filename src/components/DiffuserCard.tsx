@@ -2,18 +2,46 @@
 
 import { Play, Square } from "lucide-react";
 import { useState, useEffect } from "react";
+import axios from "axios"
 
 export default function TrackingCard() {
   const [isRunning, setIsRunning] = useState(false);
   const [timer, setTimer] = useState(0);
+  const [isDiffuserOn, setDiffuser] = useState(false)
+
+  async function getDiffuserState() {
+    axios
+      .get("https://blynk.cloud/external/api/get?token=y9gtpw7iauYC0CJSNe2JHwOjznVsrBTi&V0")
+      .then(response => {
+        setDiffuser(response.data)
+        setIsRunning(response.data)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
+  async function handleSetDiffuser(target: number) {
+    try {
+      await axios.get(
+        `https://blynk.cloud/external/api/update?token=y9gtpw7iauYC0CJSNe2JHwOjznVsrBTi&V0=${target}`
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
 
   const startAroma = () => {
     setIsRunning(true);
+    handleSetDiffuser(1); 
     setTimer(10); // run for 10 seconds
   };
 
   const stopAroma = () => {
     setIsRunning(false);
+    handleSetDiffuser(0); 
     setTimer(0);
   };
 
@@ -25,6 +53,8 @@ export default function TrackingCard() {
       setTimer((prev) => {
         if (prev === 1) {
           setIsRunning(false);
+          setDiffuser(false)
+          handleSetDiffuser(0)
           return 0;
         }
         return prev - 1;
@@ -33,6 +63,11 @@ export default function TrackingCard() {
 
     return () => clearInterval(interval);
   }, [isRunning, timer]);
+
+
+  useEffect(() => {
+      getDiffuserState()
+    }, []);
 
   return (
     <div className="w-[90%] h-[500px] bg-white rounded-2xl shadow-lg p-7 border-b border-[#E5E7EB] flex flex-col items-center mt-7">
