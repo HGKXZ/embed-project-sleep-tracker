@@ -39,12 +39,6 @@ export default function TrackingCard() {
     setTimer(10); // run for 10 seconds
   };
 
-  const stopAroma = () => {
-    setIsRunning(false);
-    handleSetDiffuser(0); 
-    setTimer(0);
-  };
-
   // Auto countdown + stop
   useEffect(() => {
     if (!isRunning || timer === 0) return;
@@ -81,8 +75,12 @@ export default function TrackingCard() {
           className={`w-[300px] h-[300px] rounded-full bg-gradient-to-br 
             ${isRunning ? "from-[#A4E8D4] to-[#7CC9E8]" : "from-[#B8A4E8] to-[#A4E8D4]"} 
             flex justify-center items-center shadow-xl transition-all duration-500
-            ${isRunning ? "scale-110" : "scale-100"}
+            ${isRunning 
+              ? "scale-110" 
+              : "scale-100 hover:scale-110 cursor-pointer"
+            }
           `}
+          onClick={() => !isRunning && startAroma()}
         >
           <div
             className={`w-[91%] h-[270px] rounded-full bg-white flex flex-col justify-center items-center
@@ -91,49 +89,31 @@ export default function TrackingCard() {
           >
             <img src="/img/drop.png" className="w-[40px]" />
 
-            {!isRunning ? (
-              <p className="font-inter font-bold text-[22px] text-[#1F2937] mt-4">Aroma Diffuser Ready</p>
-            ) : (
-              <p className="font-inter font-bold text-[22px] text-[#1F2937] mt-4">
-                Running... {timer}s
-              </p>
-            )}
+            <p className="font-inter font-bold text-[22px] text-[#1F2937] mt-4">
+              {isRunning ? `Running... ${timer}s` : "Aroma Diffuser Ready"}
+            </p>
 
-            {!isRunning ? (
-              <p className="font-inter font-medium text-[14px] text-[#6B7280] mt-2">
-                Tap to start aroma diffuser
-              </p>
-            ) : (
-              <p className="font-inter font-medium text-[14px] text-[#6B7280] mt-2">
-                Auto stop in {timer}s
-              </p>
-            )}
+            <p className="font-inter font-medium text-[14px] text-[#6B7280] mt-2">
+              {isRunning ? `Auto stop in ${timer}s` : "Tap to start aroma diffuser"}
+            </p>
           </div>
         </div>
       </div>
 
       <div
-        className={`w-[30%] h-[50px] rounded-xl mt-4 flex flex-row justify-center items-center cursor-pointer 
-          hover:scale-[1.05] transition-all duration-300 
-          ${isRunning ? "bg-[#F3E8FF]" : "bg-gradient-to-br from-[#9B88D4] to-[#B8A4E8]"}
+        className={`w-[30%] h-[50px] rounded-xl mt-4 flex flex-row justify-center items-center
+          transition-all duration-300
+          ${isRunning 
+            ? "bg-gray-300 cursor-not-allowed" 
+            : "bg-gradient-to-br from-[#9B88D4] to-[#B8A4E8] hover:scale-[1.05] cursor-pointer"
+          }
         `}
-        onClick={() => (isRunning ? stopAroma() : startAroma())}
+        onClick={() => !isRunning && startAroma()}
       >
-        {isRunning ? (
-          <>
-            <Square size={24} className="text-[#6B21A8] mr-3" />
-            <p className="font-inter font-medium text-[16px] text-[#6B21A8] text-center">
-              Stop Aroma Diffuser
-            </p>
-          </>
-        ) : (
-          <>
-            <Play size={24} className="text-white mr-3" />
-            <p className="font-inter font-medium text-[16px] text-white text-center">
-              Start Aroma Diffuser
-            </p>
-          </>
-        )}
+        <Play size={24} className={`${isRunning ? "text-gray-500" : "text-white"} mr-3`} />
+        <p className={`font-inter font-medium text-[16px] text-center ${isRunning ? "text-gray-500" : "text-white"}`}>
+          {isRunning ? "Aroma Diffuser Running" : "Start Aroma Diffuser"}
+        </p>
       </div>
 
       <p className="font-inter font-medium text-[14px] text-[#6B7280] mt-3">
