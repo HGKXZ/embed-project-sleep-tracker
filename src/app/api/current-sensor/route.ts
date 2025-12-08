@@ -1,13 +1,13 @@
-import { NextResponse } from 'next/server';
 import db from '@/lib/firebase/firestore';
 import {
   collection,
   getDocs,
-  query,
+  limit,
   orderBy,
-  limit
+  query,
+  Timestamp
 } from 'firebase/firestore';
-import { Timestamp } from 'firebase/firestore';
+import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
   try {

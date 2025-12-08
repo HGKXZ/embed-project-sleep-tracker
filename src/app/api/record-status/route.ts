@@ -1,15 +1,15 @@
-import { NextResponse } from 'next/server';
 import db from '@/lib/firebase/firestore';
 import {
+  addDoc,
   collection,
   getDocs,
-  addDoc,
-  updateDoc,
-  query,
+  limit,
   orderBy,
-  limit
+  query,
+  Timestamp,
+  updateDoc
 } from 'firebase/firestore';
-import { Timestamp } from 'firebase/firestore';
+import { NextResponse } from 'next/server';
 
 type StatusType = "START" | "END";
 

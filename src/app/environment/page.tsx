@@ -1,11 +1,10 @@
 "use client"
-import Sidebar from "@/components/Sidebar"
-import Topbar from "@/components/Topbar"
 import EnvironmentCard from "@/components/EnvironmentCard"
 import SleepInsightsCard from "@/components/SleepInsightsCard"
-import { useState, useEffect } from "react";
-import { SessionRecords, IntervalRecords } from "../../../interface"
+import Topbar from "@/components/Topbar"
 import axios from "axios"
+import { useEffect, useState } from "react"
+import { IntervalRecords, SessionRecords } from "../../../interface"
 
 export default function Environment() {
   const [dailyRecordData, setDailyRecordData] = useState<SessionRecords>();
@@ -15,7 +14,7 @@ export default function Environment() {
   function loadData(){
       setLoading(true)
       axios
-      .get("/api/daily-report") //urgent: ?date=2025-11-29
+      .get("/api/daily-report")
       .then(response => {  
         setDailyRecordData(response.data.response.data.sleepReport)
         setHourlyRecordData(response.data.response.data.hourlyData)

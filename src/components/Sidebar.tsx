@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { ChartLine, Bed, Thermometer, TreePine, PanelLeftClose, PanelLeft } from "lucide-react";
+import { Bed, ChartLine, PanelLeft, PanelLeftClose, Thermometer, TreePine } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Sidebar() {
     const pathname = usePathname();

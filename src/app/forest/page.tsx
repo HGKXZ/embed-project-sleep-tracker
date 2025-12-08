@@ -1,28 +1,19 @@
 "use client"
 
-import Sidebar from "@/components/Sidebar"
-import Topbar from "@/components/Topbar"
-import { Droplet, Lightbulb, Sun, Thermometer, Volume2 } from "lucide-react"
-import { dailyRecordData } from "../../../mock";
-import { useState, useEffect } from "react";
+import Topbar from "@/components/Topbar";
+import { Droplet, Lightbulb, Sun, Thermometer, Volume2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import axios from "axios"
-import DiffuserCard from "@/components/DiffuserCard"
+import DiffuserCard from "@/components/DiffuserCard";
+import axios from "axios";
 import { toHumidityQuality, toLightQuality, toSoundQuality, toTempQuality } from "../utils/qualityUtil";
 
 export default function Forest() {
-  const [loading, setLoading] = useState(false)
   const [dailyRecordData, setDailyRecordData] = useState<any>();
-  const [dailyRecordDataReversed, setDailyRecordDataReversed] = useState<any>();
-  const [isDiffuserOn, setDiffuser] = useState(false)
-  
 
   async function loadData() {
-    const today = new Date();
-    const end = today.toISOString().split("T")[0];
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 7);
-    const start = startDate.toISOString().split("T")[0];
 
     axios
       .get(`/api/current-sensor`)
@@ -32,11 +23,8 @@ export default function Forest() {
       })
       .catch(err => {
         console.error(err);
-      });
-
-    
+      }); 
   }
-
 
   useEffect(() => {
       loadData()

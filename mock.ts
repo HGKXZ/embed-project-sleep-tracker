@@ -1,4 +1,4 @@
-import { SessionRecords, IntervalRecords } from "./interface";
+import { IntervalRecords, SessionRecords } from "./interface";
 
 export const dailyRecordData: SessionRecords[] = [
     { session_id: "session_2025-10-15_vr8mnh", date: "2025-10-09T00:00:00Z", averageHumidity: 58.3, averageLightExposure: 12.4, averageSoundLevel: 28.5, averageTemperature: 22.1, totalSleepDuration: 495, sleepQualityScore: 80},

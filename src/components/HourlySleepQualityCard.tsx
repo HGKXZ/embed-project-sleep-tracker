@@ -1,16 +1,16 @@
 "use client";
 
-import { IntervalRecords } from "../../interface";
 import {
-  XAxis,
-  YAxis,
+  Bar,
+  BarChart,
   CartesianGrid,
-  Tooltip,
   Legend,
   ResponsiveContainer,
-  BarChart,
-  Bar,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from "recharts";
+import { IntervalRecords } from "../../interface";
 
 interface IntervalSleepQualityCardProps {
   timestamp: any; // Firestore Timestamp or JS Date

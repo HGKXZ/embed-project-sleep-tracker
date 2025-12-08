@@ -3,7 +3,6 @@
 import { roundTo } from "@/app/utils/math";
 import { toHumidityQuality, toLightQuality, toSoundQuality, toTempQuality } from "@/app/utils/qualityUtil";
 import { Droplet, Sun, Thermometer, Volume2 } from "lucide-react";
-import { useState } from "react";
 
 interface EnvironmentCardProps {
    environment: {

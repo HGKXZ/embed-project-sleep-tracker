@@ -1,15 +1,14 @@
 "use client"
 
-import Sidebar from "@/components/Sidebar"
-import Topbar from "@/components/Topbar"
-import { Brain, Clock, Heart, Moon, ToggleLeft, ToggleRight } from "lucide-react"
 import EnvironmentCard from "@/components/EnvironmentCard"
-import SleepInsightsCard from "@/components/SleepInsightsCard"
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import IntervalSleepQualityCard from "@/components/HourlySleepQualityCard"
+import SleepInsightsCard from "@/components/SleepInsightsCard"
+import Topbar from "@/components/Topbar"
 import axios from "axios"
-import { SessionRecords, IntervalRecords } from "../../../interface"
+import { motion } from "framer-motion"
+import { Clock, Moon } from "lucide-react"
+import { useEffect, useState } from "react"
+import { IntervalRecords, SessionRecords } from "../../../interface"
 import { roundTo } from "../utils/math"
 export default function Dashboard() {
 
@@ -121,7 +120,6 @@ export default function Dashboard() {
                   <div className="w-[55px] h-[55px] bg-[#EFF6FF] rounded-xl flex justify-center items-center">
                     <Clock size={20} className="text-[#2563EB]"/>
                   </div>
-                  {/* <p className="font-inter font-medium text-[16px] text-[#16A34A]">+15 min</p> */}
                 </div>
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Total Sleep</p>
                 <p className="font-inter font-bold text-[34px]">{formatTime(dailyRecordData?.totalSleepDuration ? dailyRecordData.totalSleepDuration : 0)}</p>
@@ -131,31 +129,10 @@ export default function Dashboard() {
                   <div className="w-[55px] h-[55px] bg-[#FAF5FF] rounded-xl flex justify-center items-center">
                     <Moon size={20} className="text-[#9333EA]"/>
                   </div>
-                  {/* <p className="font-inter font-medium text-[16px] text-[#16A34A]">Good</p> */}
                 </div>
                 <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Average Sleep Quality</p>
                 <p className="font-inter font-bold text-[34px]">{dailyRecordData?.sleepQualityScore ? dailyRecordData.sleepQualityScore : 0}%</p>
               </div>
-              {/* <div className="w-[33%] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col hover:scale-[1.05] transition-all duration-300">
-                <div className="w-full h-[55px] flex flex-row justify-between items-center mb-6">
-                  <div className="w-[55px] h-[55px] bg-[#EEF2FF] rounded-xl flex justify-center items-center">
-                    <Brain size={20} className="text-[#4F46E5]"/>
-                  </div>
-                  <p className="font-inter font-medium text-[16px] text-[#2563EB]">4 cycles</p>
-                </div>
-                <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Deep Sleep</p>
-                <p className="font-inter font-bold text-[34px]">{formatTime(120)}</p>
-              </div> */}
-              {/* <div className="w-[300px] h-full bg-white rounded-2xl shadow-lgp-6 border-b border-[#E5E7EB] p-6 flex flex-col">
-                <div className="w-full h-[55px] flex flex-row justify-between items-center mb-6">
-                  <div className="w-[55px] h-[55px] bg-[#F0FDF4] rounded-xl flex justify-center items-center">
-                    <Heart size={20} className="text-[#16A34A]"/>
-                  </div>
-                  <p className="font-inter font-medium text-[16px] text-[#16A34A]">Normal</p>
-                </div>
-                <p className="font-inter font-medium text-[16px] text-[#4B5563] mb-2">Avg Heart Rate</p>
-                <p className="font-inter font-bold text-[34px]">62 bpm</p>
-              </div> */}
             </div>
             <div className="w-full h-[450px] flex flex-row mt-5 gap-5">
               <div className="w-[70%]">

@@ -1,8 +1,8 @@
 "use client";
 
-import { Play, Square } from "lucide-react";
-import { useState, useEffect } from "react";
-import axios from "axios"
+import axios from "axios";
+import { Play } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function TrackingCard() {
   const [isRunning, setIsRunning] = useState(false);

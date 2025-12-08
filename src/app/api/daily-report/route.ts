@@ -1,12 +1,11 @@
-import { NextResponse } from 'next/server';
 import db from '@/lib/firebase/firestore';
 import {
   collection,
   getDocs,
   query,
-  where,
-  orderBy
+  where
 } from 'firebase/firestore';
+import { NextResponse } from 'next/server';
 
 async function checkRecentSession() {
   const sessionQuery = query(

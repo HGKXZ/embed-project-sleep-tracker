@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import db from '@/lib/firebase/firestore';
 import {
   collection,
@@ -6,8 +5,7 @@ import {
   query,
   where
 } from 'firebase/firestore';
-import { Timestamp } from 'firebase/firestore';
-import { report } from 'process';
+import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
   try {

@@ -2,16 +2,12 @@ import { NextResponse } from 'next/server';
 
 import db from '@/lib/firebase/firestore';
 import {
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  orderBy,
-  limit,
-  Timestamp
+    collection,
+    getDocs,
+    limit,
+    orderBy,
+    query
 } from 'firebase/firestore';
-import { time } from 'console';
-import { create } from 'domain';
 
 export async function GET() {
     try {

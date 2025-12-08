@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
+    CartesianGrid,
+    Legend,
+    Line,
+    LineChart,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
 } from "recharts";
-import { SessionRecords } from "../../interface"
+import { SessionRecords } from "../../interface";
 
 interface SleepQualityTrendCardProps {
   dailyRecordData: SessionRecords[] | undefined;

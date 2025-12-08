@@ -1,21 +1,19 @@
 "use client";
 
 import IntervalSleepQualityCard from "@/components/HourlySleepQualityCard";
-import Sidebar from "@/components/Sidebar"
-import SleepQualityTrendCard from "@/components/SleepQualityTrendCard"
-import Topbar from "@/components/Topbar"
+import SleepQualityTrendCard from "@/components/SleepQualityTrendCard";
+import Topbar from "@/components/Topbar";
 import { ChevronDown, ChevronUp, TriangleAlert, Trophy } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { SessionRecords } from "../../../interface";
 import { intervalRecordData } from "../../../mock";
-import { SessionRecords } from "../../../interface"
 
-import axios from "axios"
+import axios from "axios";
 import { roundTo } from "../utils/math";
 
 
 
 export default function SleepHistory() {
-  const [loading, setLoading] = useState(false)
   const [dailyRecordData, setDailyRecordData] = useState<SessionRecords[]>();
   const [dailyRecordDataReversed, setDailyRecordDataReversed] = useState<SessionRecords[]>();
   

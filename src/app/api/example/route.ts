@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import db from '@/lib/firebase/firestore';
-import { collection, getDocs, addDoc, query, where, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, Timestamp, where } from 'firebase/firestore';
 
 /* Example API route
     * GET http://localhost:3000/api/example
@@ -141,6 +141,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
-//There will be no to PUT and Delete because its sensor bro
-//ei ei

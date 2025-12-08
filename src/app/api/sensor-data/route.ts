@@ -1,14 +1,14 @@
-import { NextResponse } from 'next/server';
 import db from '@/lib/firebase/firestore';
 import axios from 'axios';
+import { NextResponse } from 'next/server';
 
 import {
-  collection,
   addDoc,
+  collection,
   getDocs,
-  query,
+  limit,
   orderBy,
-  limit
+  query
 } from 'firebase/firestore';
 
 /*

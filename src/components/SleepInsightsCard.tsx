@@ -1,7 +1,6 @@
 "use client"
 
 import { Check, Lightbulb, Moon } from "lucide-react";
-import { useState } from "react";
 
 export default function SleepInsightsCard() {
     return (
